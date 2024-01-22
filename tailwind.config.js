@@ -9,27 +9,28 @@ module.exports = {
       colors: {
         blue: {
           main: "#0F67FD",
-          secondary: "#D8E4FA"
+          secondary: "#D8E4FA",
+          tertiary: "#458CFE",
         },
         black: {
           main: "#080E1C",
-          grey: "#5D6A85"
+          secondary: "#5D6A85",
         },
         green: {
           main: "#3FD9AB",
-          secondary: "#6FF1CA"
+          secondary: "#6FF1CA",
         },
         orange: {
           main: "#FFF8EB",
-          secondary: "#FACF7C"
+          secondary: "#FACF7C",
         },
         red: {
           main: "#D93F3F",
-          secondary: "#F16F6F"
+          secondary: "#F16F6F",
         },
         purple: {
           main: "#EABEFF",
-          secondary: "#F9EDFF"
+          secondary: "#F9EDFF",
         },
         warning: {
           main: "#CD7B2E",
@@ -73,5 +74,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
-
+};

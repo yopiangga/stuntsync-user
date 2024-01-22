@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "src/components/button";
 import { InputDefault } from "src/components/input/input-default";
+import { UserContext } from "src/context/UserContext";
 
 export function SignInPage() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
 
   const [inputSignIn, setInputSignIn] = useState({
-    email: "",
-    password: "",
+    email: "yopiangga@email.com",
+    password: "12345678",
   });
 
   function handleChange(e) {
@@ -22,6 +24,14 @@ export function SignInPage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    setUser({
+      id: 1,
+      name: "Alfian Prisma Yopiangga",
+      email: "yopiangga@email.com",
+      role: "user",
+    });
+
+    navigate("/");
   }
 
   return (
