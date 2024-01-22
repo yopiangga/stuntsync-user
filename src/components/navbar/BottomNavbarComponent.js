@@ -1,5 +1,6 @@
-import { FiHome, FiPlus, FiShoppingCart, FiUser } from "react-icons/fi";
-import { PiArticle } from "react-icons/pi";
+import { FiHome, FiPlus, FiUser } from "react-icons/fi";
+import { MdOutlineArticle } from "react-icons/md";
+import { IoDocumentTextOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 export function BottomNavbarComponent(props) {
@@ -21,7 +22,7 @@ export function BottomNavbarComponent(props) {
         }}
       />
       <MenuCard
-        icon={FiShoppingCart}
+        icon={IoDocumentTextOutline}
         title="Monitoring"
         active={isMonitoring}
         handleClick={() => {
@@ -34,7 +35,7 @@ export function BottomNavbarComponent(props) {
         </div>
       </div>
       <MenuCard
-        icon={PiArticle}
+        icon={MdOutlineArticle}
         title="Article"
         active={isArticle}
         handleClick={() => {

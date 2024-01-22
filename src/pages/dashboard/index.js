@@ -9,7 +9,7 @@ export function DashboardPage() {
       <NavbarComponent />
 
       <div className="w-11/12 mt-4">
-        <p className="f-p1-sb text-blue-main">
+        <p className="f-p2-sb text-blue-main">
           Track, Monitor, Ensure, Cherish, Grow
         </p>
 
@@ -20,7 +20,7 @@ export function DashboardPage() {
         <div className="mt-4">
           <StuntingStatus
             name={"Arya Putra"}
-            image={""}
+            // image={null}
             status={"stunting"}
             age={"2y, 2 month"}
           />
