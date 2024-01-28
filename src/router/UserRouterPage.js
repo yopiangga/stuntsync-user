@@ -5,6 +5,7 @@ import { ArticlePage } from "src/pages/article";
 import { DashboardPage } from "src/pages/dashboard";
 import { MonitoringPage } from "src/pages/monitoring";
 import { ProfilePage } from "src/pages/profile";
+import { EditProfilePage } from "src/pages/profile/edit-profile";
 
 export default function UserRouterPage() {
   return (
@@ -15,6 +16,7 @@ export default function UserRouterPage() {
           <Route path="/monitoring" element={<MonitoringPage />} />
           <Route path="/article" element={<ArticlePage />} />
           <Route path="/my-profile" element={<ProfilePage />} />
+          <Route path="/edit-profile" element={<EditProfilePage />} />
 
           {/* all path redirect to path "/" */}
         </Routes>

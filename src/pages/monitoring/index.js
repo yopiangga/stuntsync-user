@@ -59,24 +59,28 @@ export function MonitoringPage() {
             description="Include more fruits and vegetables in their diet."
             check={true}
             handleCheck={() => {}}
+            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
           />
           <CardRecomendation
             title="Proteins and carbohydrates."
             description="Ensure a good balance of proteins and carbohydrates."
             check={false}
             handleCheck={() => {}}
+            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
           />
           <CardRecomendation
             title="Regular intake of dairy"
             description="Encourage regular intake of dairy for calcium."
             check={false}
             handleCheck={() => {}}
+            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
           />
           <CardRecomendation
             title="Schedule regular activity"
             description="Schedule regular physical activity for at least 30 minutes a day."
             check={false}
             handleCheck={() => {}}
+            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
           />
         </div>
 
@@ -133,7 +137,10 @@ function CardRecomendation({ title, description, icon, check, handleCheck }) {
   return (
     <div className="w-full bg-white rounded-xl shadow-s1 p-4 text-center grid grid-cols-12 gap-4">
       <div className="col-span-3">
-        <img className="w-20 h-20 object-cover bg-slate-200 overflow-hidden rounded-xl" />
+        <img
+          src={icon}
+          className="w-20 h-20 object-cover bg-slate-200 overflow-hidden rounded-xl"
+        />
       </div>
       <div className="col-span-7 text-left">
         <p className="f-p2-sb mt-2">{title}</p>

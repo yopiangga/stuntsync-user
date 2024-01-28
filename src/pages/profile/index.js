@@ -2,8 +2,14 @@ import { ButtonComponent } from "src/components/button";
 import { NavbarDefaultComponent } from "src/components/navbar";
 import imageUser from "src/assets/images/user.png";
 import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarComponent";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "src/context/UserContext";
 
 export function ProfilePage() {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <div className="flex flex-col items-center">
       <NavbarDefaultComponent title="My Profile" type="dark" />
@@ -17,6 +23,14 @@ export function ProfilePage() {
               <div className="">
                 <h4 className="f-h4">Alfian Prisma Yopiangga</h4>
                 <p className="f-p1-r">Pria</p>
+                <button
+                  className="bg-blue-main rounded-full px-3 py-1"
+                  onClick={() => {
+                    navigate("/edit-profile");
+                  }}
+                >
+                  <p className="f-p2-r text-white">Edit Profil</p>
+                </button>
               </div>
             </div>
             <div className="mb-3">
@@ -32,7 +46,10 @@ export function ProfilePage() {
             <div className="mb-3 mt-6 flex gap-2 flex-col">
               <ButtonComponent
                 title="Log Out"
-                action={async () => {}}
+                action={async () => {
+                  setUser(null);
+                  navigate("/sign-in");
+                }}
                 color="bg-black-main"
               />
 
