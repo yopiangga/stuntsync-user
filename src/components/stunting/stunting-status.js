@@ -18,8 +18,8 @@ export function StuntingStatus({ name, age, image = imageUser, status }) {
       </div>
       <div className="grow">
         <p className="f-p2-r">Your beloved child</p>
-        <h4 className="f-h4 mt-2 line-clamp-1">{name}</h4>
-        <p className="f-p2-m">{age}</p>
+        <h5 className="f-h5 mt-2 line-clamp-1">{name}</h5>
+        <p className="f-p2-r">{age}</p>
       </div>
       <div className="w-16 h-16 bg-gray-200 rounded-xl overflow-hidden">
         <img src={imageStatus} />

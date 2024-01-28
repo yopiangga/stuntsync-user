@@ -24,3 +24,44 @@ export function NavbarComponent(props) {
     </div>
   );
 }
+
+export function NavbarDefaultComponent({
+  type,
+  title,
+  leftIcon,
+  rightIcon,
+  handleLeft,
+  handleRight,
+}) {
+  return (
+    <div
+      className={`w-full py-6 items-center text-center relative flex gap-4 justify-center shadow-sm ${
+        type == "dark" ? "text-slate-900" : "text-white bg-blue-main"
+      }`}
+    >
+      {leftIcon != null ? (
+        <button
+          type="button"
+          onClick={handleLeft}
+          className="flex justify-end items-center absolute left-5"
+        >
+          <leftIcon size={24} />
+        </button>
+      ) : (
+        <></>
+      )}
+      <h4 className="font-semibold f-h4">{title}</h4>
+      {rightIcon != null ? (
+        <button
+          type="button"
+          onClick={handleRight}
+          className="flex justify-start items-center absolute right-5"
+        >
+          <rightIcon size={24} />
+        </button>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+}

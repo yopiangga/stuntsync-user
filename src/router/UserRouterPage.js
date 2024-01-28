@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { redirect } from "react-router-dom/dist";
 import { UserLayout } from "src/layouts/user";
 import { DashboardPage } from "src/pages/dashboard";
+import { MonitoringPage } from "src/pages/monitoring";
 
 export default function UserRouterPage() {
   return (
@@ -9,6 +10,7 @@ export default function UserRouterPage() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/monitoring" element={<MonitoringPage />} />
 
           {/* all path redirect to path "/" */}
         </Routes>
