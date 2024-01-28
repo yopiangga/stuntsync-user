@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "src/components/button";
 import { InputDefault } from "src/components/input/input-default";
+import imageLogo from "src/assets/images/logo.png";
 
 export function SignUpPage() {
   const navigate = useNavigate();
@@ -22,8 +23,6 @@ export function SignUpPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-   
   }
 
   return (
@@ -31,28 +30,27 @@ export function SignUpPage() {
       onSubmit={handleSubmit}
       className="relative h-full flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="absolute -top-10 right-0 left-0 w-full">
+      {/* <div className="absolute -top-10 right-0 left-0 w-full">
         <img src={""} className="w-full" />
-      </div>
-
-      <div>
-        <img src={""} alt="Logo" />
+      </div> */}
+      <div className="w-full flex justify-start">
+        <img src={imageLogo} alt="Logo" className="h-32" />
       </div>
 
       <br />
 
       <div className="w-11/12">
-        <h2 className="f-h2 text-blue-main">Registrasi</h2>
+        <h2 className="f-h2">Sign Up</h2>
 
         <div className="mt-4">
           <InputDefault
-            label={"Nama Lengkap"}
+            label={"Fullname"}
             name={"name"}
             value={inputSignUp.name}
             handleChange={handleChange}
             type={"text"}
             required={true}
-            placeholder={"Masukkan nama lengkap anda"}
+            placeholder={""}
           />
         </div>
         <div className="mt-2">
@@ -63,7 +61,7 @@ export function SignUpPage() {
             handleChange={handleChange}
             type={"email"}
             required={true}
-            placeholder={"Masukkan email anda"}
+            placeholder={""}
           />
         </div>
         <div className="mt-2">
@@ -83,9 +81,9 @@ export function SignUpPage() {
       <br />
       <br />
 
-      <div className="bg-blue-main absolute bottom-0 w-full flex justify-between items-center h-24 px-5">
+      <div className="bg-black-main absolute bottom-0 w-full flex justify-between items-center h-24 px-5">
         <p className="f-p2-r text-white">
-          Sudah memiliki akun? <br />
+          Do you have been account? <br />
           <button
             type="button"
             onClick={() => {
@@ -93,7 +91,7 @@ export function SignUpPage() {
             }}
             className="f-p2-m"
           >
-            Masuk
+            Sign In
           </button>
         </p>
         <div className="w-1/3">
