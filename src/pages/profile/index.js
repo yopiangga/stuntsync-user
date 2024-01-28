@@ -55,7 +55,9 @@ export function ProfilePage() {
 
               <ButtonComponent
                 title="Change Password"
-                action={() => {}}
+                action={() => {
+                  navigate("/change-password");
+                }}
                 color="bg-slate-400"
               />
             </div>
