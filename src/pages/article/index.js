@@ -6,8 +6,11 @@ import iconLove from "src/assets/icon/love.svg";
 import iconEye from "src/assets/icon/eye.svg";
 import iconComment from "src/assets/icon/comment.svg";
 import iconPlayVideo from "src/assets/icon/play-video.svg";
+import { useNavigate } from "react-router-dom";
 
 export function ArticlePage() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center">
       <NavbarDefaultComponent title="Articles" type="dark" />
@@ -85,7 +88,9 @@ function CountsComponent() {
   );
 }
 
-function MainArticleCard() {
+function MainArticleCard({}) {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full bg-white rounded-xl shadow-s1 overflow-hidden relative">
       <img
@@ -98,9 +103,14 @@ function MainArticleCard() {
             Unlocking the Power of Play: A Guide for Parents
           </p>
         </div>
-        <div className="w-10 h-10 rounded-lg bg-blue-secondary text-blue-main flex justify-center items-center">
+        <button
+          onClick={() => {
+            navigate("/detail-article/1");
+          }}
+          className="w-10 h-10 rounded-lg bg-blue-secondary text-blue-main flex justify-center items-center"
+        >
           <FiArrowUpRight size={24} />
-        </div>
+        </button>
       </div>
     </div>
   );
@@ -116,8 +126,15 @@ function ArticlesComponent() {
 }
 
 function ArticleCard() {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-full bg-white rounded-xl shadow-s1 p-4 flex flex-col">
+    <button
+      onClick={() => {
+        navigate("/detail-article/1");
+      }}
+      className="w-full bg-white rounded-xl shadow-s1 p-4 flex flex-col text-left"
+    >
       <div className="bg-blue-secondary py-1 px-3 text-blue-main rounded-full w-fit">
         <p className="f-p2-r">Wellness</p>
       </div>
@@ -127,7 +144,7 @@ function ArticleCard() {
       <div className="mt-2">
         <PostAction />
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -141,8 +158,15 @@ function VideosComponent() {
 }
 
 function VideoCard() {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-full bg-white rounded-xl shadow-s1 p-4 gap-4 grid grid-cols-12">
+    <button
+      onClick={() => {
+        navigate("/detail-video/1");
+      }}
+      className="w-full bg-white rounded-xl shadow-s1 p-4 gap-4 grid grid-cols-12 text-left"
+    >
       <div className="col-span-3 rounded-xl overflow-hidden">
         <img
           className="object-cover w-full h-full"
@@ -157,7 +181,7 @@ function VideoCard() {
           <PostAction />
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 

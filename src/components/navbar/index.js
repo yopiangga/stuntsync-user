@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { FiBell, FiCalendar } from "react-icons/fi";
 import { UserContext } from "src/context/UserContext";
+import * as Icons from "react-icons/fi";
 
 export function NavbarComponent(props) {
   const { user } = useContext(UserContext);
@@ -25,6 +26,17 @@ export function NavbarComponent(props) {
   );
 }
 
+const DynamicFaIcon = ({ name }) => {
+  const IconComponent = Icons[name];
+
+  if (!IconComponent) {
+    // Return a default one
+    return <Icons.FiActivity />;
+  }
+
+  return <IconComponent />;
+};
+
 export function NavbarDefaultComponent({
   type,
   title,
@@ -45,7 +57,7 @@ export function NavbarDefaultComponent({
           onClick={handleLeft}
           className="flex justify-end items-center absolute left-5"
         >
-          <leftIcon size={24} />
+          <DynamicFaIcon name={leftIcon} size={24} />
         </button>
       ) : (
         <></>
