@@ -30,9 +30,14 @@ export function BottomNavbarComponent(props) {
         }}
       />
       <div className="relative w-56 flex justify-center">
-        <div className="bg-blue-main w-12 h-12 flex justify-center items-center rounded-xl text-white absolute -top-7">
+        <button
+          onClick={() => {
+            navigate("/screening");
+          }}
+          className="bg-blue-main w-12 h-12 flex justify-center items-center rounded-xl text-white absolute -top-7"
+        >
           <FiPlus size={28} />
-        </div>
+        </button>
       </div>
       <MenuCard
         icon={MdOutlineArticle}
