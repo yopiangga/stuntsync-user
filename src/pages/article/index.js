@@ -10,7 +10,7 @@ import iconPlayVideo from "src/assets/icon/play-video.svg";
 export function ArticlePage() {
   return (
     <div className="flex flex-col items-center">
-      <NavbarDefaultComponent title="Articles" />
+      <NavbarDefaultComponent title="Articles" type="dark" />
 
       <div className="w-11/12 mt-6">
         <div>

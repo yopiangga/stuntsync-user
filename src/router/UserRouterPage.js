@@ -4,6 +4,7 @@ import { UserLayout } from "src/layouts/user";
 import { ArticlePage } from "src/pages/article";
 import { DashboardPage } from "src/pages/dashboard";
 import { MonitoringPage } from "src/pages/monitoring";
+import { ProfilePage } from "src/pages/profile";
 
 export default function UserRouterPage() {
   return (
@@ -13,6 +14,7 @@ export default function UserRouterPage() {
           <Route path="/" element={<DashboardPage />} />
           <Route path="/monitoring" element={<MonitoringPage />} />
           <Route path="/article" element={<ArticlePage />} />
+          <Route path="/my-profile" element={<ProfilePage />} />
 
           {/* all path redirect to path "/" */}
         </Routes>

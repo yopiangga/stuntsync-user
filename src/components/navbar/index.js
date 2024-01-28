@@ -36,7 +36,7 @@ export function NavbarDefaultComponent({
   return (
     <div
       className={`w-full py-5 items-center text-center relative flex gap-4 justify-center shadow-sm ${
-        type == "dark" ? "text-slate-900" : "text-white bg-blue-main"
+        type == "dark" ? "text-slate-900 bg-white" : "text-white bg-blue-main"
       }`}
     >
       {leftIcon != null ? (
