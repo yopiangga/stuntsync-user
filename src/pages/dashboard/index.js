@@ -1,3 +1,4 @@
+import { LineChartComponent } from "src/components/chart/line-chart";
 import { HeaderSection } from "src/components/header/header-section";
 import { NavbarComponent } from "src/components/navbar";
 import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarComponent";
@@ -42,7 +43,15 @@ export function DashboardPage() {
         <div className="mt-6">
           <HeaderSection label="Growth Chart Overview" />
         </div>
+
+        <div>
+          <LineChartComponent />
+        </div>
       </div>
+
+      <br />
+      <br />
+      <br />
 
       <div className="fixed bottom-0 w-full">
         <BottomNavbarComponent />

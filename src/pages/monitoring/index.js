@@ -4,6 +4,7 @@ import { FaChartLine } from "react-icons/fa";
 import { HeaderSection } from "src/components/header/header-section";
 import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarComponent";
 import { FiCheck } from "react-icons/fi";
+import { LineChartComponent } from "src/components/chart/line-chart";
 
 export function MonitoringPage() {
   return (
@@ -41,6 +42,10 @@ export function MonitoringPage() {
 
         <div className="mt-6">
           <HeaderSection label="Growth Chart Overview" />
+        </div>
+
+        <div className="mt-0">
+          <LineChartComponent />
         </div>
 
         <div className="mt-6">
