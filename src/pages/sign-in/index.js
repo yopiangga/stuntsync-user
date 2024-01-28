@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "src/components/button";
 import { InputDefault } from "src/components/input/input-default";
 import { UserContext } from "src/context/UserContext";
+import imageLogo from "src/assets/images/logo.png";
 
 export function SignInPage() {
   const navigate = useNavigate();
@@ -39,18 +40,18 @@ export function SignInPage() {
       onSubmit={handleSubmit}
       className="relative h-full flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="absolute -top-10 right-0 left-0 w-full">
+      {/* <div className="absolute -top-10 right-0 left-0 w-full">
         <img src={""} className="w-full" />
-      </div>
-      <div>
-        <img src={""} alt="Logo" />
+      </div> */}
+      <div className="w-full flex justify-start">
+        <img src={imageLogo} alt="Logo" className="h-32" />
       </div>
 
-      <br />
+      {/* <br /> */}
       <br />
 
       <div className="w-11/12">
-        <h2 className="f-h2 text-blue-main">Masuk</h2>
+        <h2 className="f-h2">Sign In</h2>
 
         <div className="mt-4">
           <InputDefault
@@ -91,7 +92,7 @@ export function SignInPage() {
       <br />
       <br />
 
-      <div className="bg-blue-main absolute bottom-0 w-full flex justify-between items-center h-24 px-5">
+      <div className="bg-black-main absolute bottom-0 w-full flex justify-between items-center h-24 px-5">
         <p className="f-p2-r text-white">
           Belum memiliki akun? <br />
           <button
@@ -99,7 +100,7 @@ export function SignInPage() {
             onClick={() => {
               navigate("/sign-up");
             }}
-            className="f-p2-m"
+            className="f-p2-m text-blue-main"
           >
             Registrasi
           </button>
