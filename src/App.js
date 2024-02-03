@@ -6,6 +6,8 @@ import UserRouterPage from "./router/UserRouterPage";
 import { JWTPayload } from "./methods/JWTPayload";
 import { AppContextProvider } from "./context/AppContextProvider";
 import LoadComponent from "./components/load";
+import { cookies } from "./services/config";
+import { UserServices } from "./services/UserServices";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ export default App;
 
 
 function UserManager() {
+  const userServices = new UserServices();
 
   const { user, setUser } = useContext(UserContext);
   const [load, setLoad] = useState(true);
@@ -28,9 +31,18 @@ function UserManager() {
   }, []);
 
   async function fetch() {
-    setTimeout(() => {
-      setLoad(false);
-    }, 1000);
+    const token = cookies?.token ?? ""
+
+    if (token) {
+      const res = await userServices.MyProfile();
+      if (res) {
+        setUser(res.data);
+      } else {
+        setUser(null);
+      }
+    }
+
+    setLoad(false);
   }
 
   if (load) {

@@ -4,9 +4,12 @@ import { ButtonComponent } from "src/components/button";
 import { InputDefault } from "src/components/input/input-default";
 import { UserContext } from "src/context/UserContext";
 import imageLogo from "src/assets/images/logo.png";
+import { AuthServices } from "src/services/AuthServices";
+import toast from "react-hot-toast";
 
 export function SignInPage() {
   const navigate = useNavigate();
+  const authServices = new AuthServices();
   const { user, setUser } = useContext(UserContext);
 
   const [inputSignIn, setInputSignIn] = useState({
@@ -25,14 +28,13 @@ export function SignInPage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    setUser({
-      id: 1,
-      name: "Alfian Prisma Yopiangga",
-      email: "yopiangga@email.com",
-      role: "user",
-    });
+    const res = await authServices.SignIn(inputSignIn);
 
-    navigate("/");
+    if (res.code === 200) {
+      toast.success(res.message);
+      document.cookie = `token=${res.data.token}`;
+      window.location.href = "/";
+    }
   }
 
   return (
