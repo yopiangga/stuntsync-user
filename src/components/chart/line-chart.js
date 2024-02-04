@@ -10,7 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import graphContant from "src/constant/graph.json";
+import { monthsMale, min1sdMale, min2sdMale, min3sdMale, nolsdMale, plus1sdMale, plus2sdMale, plus3sdMale} from "src/constant/male-graph";
+import { monthsFemale, min1sdFemale, min2sdFemale, min3sdFemale, nolsdFemale, plus1sdFemale, plus2sdFemale, plus3sdFemale} from "src/constant/female-graph"
 
 ChartJS.register(
   CategoryScale,
@@ -35,38 +36,10 @@ export const options = {
   },
 };
 
-const months = []
-const min3sd = []
-const min2sd = []
-const min1sd = []
-const nolsd = []
-const plus1sd = []
-const plus2sd = []
-const plus3sd = []
-
 export function LineChartComponent({height, gender}) {
 
-  useEffect(() => {
-    fetchConsts(gender)
-  }, [])
-
-  function fetchConsts(gender){
-    graphContant.forEach((item) => {
-      if(gender == item.gender){
-        months.push(item.month)
-        min3sd.push(item.min3sd)
-        min2sd.push(item.min2sd)
-        min1sd.push(item.min1sd)
-        nolsd.push(item.nolsd)
-        plus1sd.push(item.plus1sd)
-        plus2sd.push(item.plus2sd)
-        plus3sd.push(item.plus3sd)
-      }
-    })
-  }
-
   return <Line options={options} data={{
-    labels: months,
+    labels: monthsMale,
     datasets: [
       {
         label: "Height",
@@ -78,44 +51,44 @@ export function LineChartComponent({height, gender}) {
         label: "Min 3 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: min3sd
+        data: gender == "male" ? min3sdMale : min3sdFemale
       },
       {
         label: "Min 2 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: min2sd
+        data: gender == "male" ? min2sdMale : min2sdFemale
       },
       {
         label: "Min 1 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: min1sd
+        data: gender == "male" ? min1sdMale : min1sdFemale
       },
       {
         label: "0 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: nolsd
+        data: gender == "male" ? nolsdMale : nolsdFemale
       },
       {
         label: "Plus 1 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: plus1sd
+        data: gender == "male" ? plus1sdMale : plus1sdFemale
       },
       {
         label: "Plus 2 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: plus2sd
+        data: gender == "male" ? plus2sdMale : plus2sdFemale
       },
       {
         label: "Plus 3 SD",
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
-        data: plus3sd
-      },
+        data: gender == "male" ? plus3sdMale : plus3sdFemale
+      }, 
     ]
   }} />;
 }

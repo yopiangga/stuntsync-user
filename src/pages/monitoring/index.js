@@ -13,6 +13,8 @@ import { RecomendationServices } from "src/services/RecomendationServices";
 import { RecomendationCheckServices } from "src/services/RecomendationCheckServices";
 import { ButtonComponent } from "src/components/button";
 import { useNavigate } from "react-router-dom";
+import { monthsMale, min1sdMale, min2sdMale, min3sdMale, nolsdMale, plus1sdMale, plus2sdMale, plus3sdMale} from "src/constant/male-graph";
+import { monthsFemale, min1sdFemale, min2sdFemale, min3sdFemale, nolsdFemale, plus1sdFemale, plus2sdFemale, plus3sdFemale} from "src/constant/female-graph"
 
 export function MonitoringPage() {
   const navigate = useNavigate();
@@ -35,13 +37,13 @@ export function MonitoringPage() {
 
     if (res) {
       setMonitorings(res.data);
+      console.log(res.data);
     }
   }
 
   async function fetchRecomendations({babyId = user.baby[0].id}){
     const res = await recomendationServices.RecomendationByBabyId({ babyId });
 
-    console.log(res);
     if (res) {
       setRecomendations(res.data);
     }
@@ -108,15 +110,21 @@ export function MonitoringPage() {
         <div className="flex w-full gap-4">
           <CardStatus
             title="Stunting Status"
-            value="Normal"
-            date="Tue, 25 Jan 2024"
+            value={() => {
+              return "s"
+            }}
+            date={
+              new Date(monitorings[monitorings.length - 1]?.month).toDateString()
+            }
             icon={iconGrowth}
           />
 
           <CardStatus
             title="Growth Progress"
-            value="Good"
-            date="Tue, 25 Jan 2024"
+            value={monitorings[monitorings.length - 1]?.height + " cm"}
+            date={
+              new Date(monitorings[monitorings.length - 1]?.month).toDateString()
+            }
             icon={iconGrowth}
           />
         </div>
@@ -126,19 +134,8 @@ export function MonitoringPage() {
         </div>
 
         <div className="mt-0">
-        <LineChartComponent data={
-            {
-              labels: monitorings.map((monitoring) => new Date(monitoring.createdAt).toLocaleDateString()),
-              datasets: [
-                {
-                  label: "Height",
-                  data: monitorings.map((monitoring) => monitoring.height),
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                },
-              ],
-            }
-          } />
+        <LineChartComponent gender={user.baby[0].gender}
+          height={monitorings.map((monitoring) => monitoring.height)} />
         </div>
 
         <div className="mt-6">
