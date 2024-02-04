@@ -11,8 +11,11 @@ import { UserContext } from "src/context/UserContext";
 import { MonitoringServices } from "src/services/MonitoringServices";
 import { RecomendationServices } from "src/services/RecomendationServices";
 import { RecomendationCheckServices } from "src/services/RecomendationCheckServices";
+import { ButtonComponent } from "src/components/button";
+import { useNavigate } from "react-router-dom";
 
 export function MonitoringPage() {
+  const navigate = useNavigate();
   const monitoringServices = new MonitoringServices();
   const recomendationServices = new RecomendationServices();
   const recomendationCheckServices = new RecomendationCheckServices();
@@ -20,6 +23,7 @@ export function MonitoringPage() {
   const {user} = useContext(UserContext);
   const [recomendations, setRecomendations] = useState([]);
   const [monitorings, setMonitorings] = useState([]);
+  const [recomendationActive, setRecomendationActive] = useState();
 
   useEffect(() => {
     fetchMonitoring({ babyId: user.baby[0].id });
@@ -45,6 +49,40 @@ export function MonitoringPage() {
 
   return (
     <div className="flex flex-col items-center">
+      {
+        recomendationActive ? <div className="w-full h-screen fixed bg-black-main bg-opacity-25 z-50 flex justify-center items-center">
+            <div className="w-11/12 bg-white rounded-xl shadow-lg p-4 text-justify">
+              <h5 className="f-h5 text-center">
+                Recommendation Check
+              </h5>
+              <p className="f-p1-m mt-4">{recomendationActive.title}</p>
+              <p className="f-p1-r">{recomendationActive.desc}</p>
+
+              <div className="flex gap-2 mt-4">
+                <ButtonComponent
+                  title="Cancel"
+                  type="button"
+                  color="bg-slate-400"
+                  action={() => {
+                    setRecomendationActive(null);
+                  }}
+                />
+                <ButtonComponent
+                  title="Check"
+                  type="button"
+                  color="bg-blue-main"
+                  action={async () => {
+                    const res = await recomendationCheckServices.CreateRecomendationCheck({ recomendationId: recomendationActive.id });
+                    if (res) {
+                      fetchRecomendations({ babyId: user.baby[0].id });
+                      setRecomendationActive(null);
+                    }
+                  }}
+                />
+                </div>
+            </div>
+          </div> : null
+      }
       <NavbarDefaultComponent title="Child Monitoring Hub" />
 
       <div className="relative bg-white w-full flex justify-center">
@@ -114,17 +152,19 @@ export function MonitoringPage() {
                 key={"recomendation" + index}
                 title={recomendation.title}
                 description={recomendation.desc}
-                check={
-                  // date now - date recomendation checks last more than qty / 30 days
-                  (new Date() - new Date(recomendation.checks[recomendation.checks.length - 1].createdAt)) / (1000 * 60 * 60 * 24) > 30
-                }
-                handleCheck={async () => {
-                  const res = await recomendationCheckServices.CreateRecomendationCheck({ recomendationId: recomendation.id });
-                  console.log(res);
-                  if (res) {
-                    fetchRecomendations({ babyId: user.baby[0].id });
-                  }
-                }}
+                qty={recomendation.qty}
+                action={async () => {setRecomendationActive(recomendation)}}
+                // check={
+                //   // date now - date recomendation checks last more than qty / 30 days
+                //   (new Date() - new Date(recomendation.checks[recomendation.checks.length - 1].createdAt)) / (1000 * 60 * 60 * 24) > 30
+                // }
+                // handleCheck={async () => {
+                //   const res = await recomendationCheckServices.CreateRecomendationCheck({ recomendationId: recomendation.id });
+                //   console.log(res);
+                //   if (res) {
+                //     fetchRecomendations({ babyId: user.baby[0].id });
+                //   }
+                // }}
                 icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
               />
             ))
@@ -174,9 +214,9 @@ function CardStatus({ title, value, date, icon }) {
   );
 }
 
-function CardRecomendation({ title, description, icon, check, handleCheck }) {
+function CardRecomendation({ title, description, icon, qty, action }) {
   return (
-    <div className="w-full bg-white rounded-xl shadow-lg p-4 text-center flex gap-3">
+    <button onClick={action} className="w-full bg-white rounded-xl shadow-lg p-4 text-center flex gap-3">
       <div className="w-16 h-16">
         <img
           src={icon}
@@ -187,18 +227,10 @@ function CardRecomendation({ title, description, icon, check, handleCheck }) {
         <p className="f-p2-sb mt-0">{title}</p>
         <p className="f-p2-r text-gray-500 mt-1">{description}</p>
       </div>
-      <div className="grow flex items-center justify-end">
-        <button
-          type="button"
-          onClick={handleCheck}
-          className={`w-6 h-6 rounded-lg flex justify-center items-center border-2 border-green-main ${
-            check ? "bg-green-main" : "bg-white"
-          }`}
-        >
-          {check ? <FiCheck color="white" /> : <></>}
-        </button>
+      <div className="w-10 h-16 flex items-center text-center">
+        <p className="text-xs text-gray-500 mt-1 font-bold"><span className="text-blue-main">{qty}</span> / mth</p>
       </div>
-    </div>
+    </button>
   );
 }
 
