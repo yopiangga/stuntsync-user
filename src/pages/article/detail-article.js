@@ -1,8 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { NavbarDefaultComponent } from "src/components/navbar";
+import { ArticleServices } from "src/services/ArticleServices";
 
 export function DetailArticlePage() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const articleServices = new ArticleServices();
+
+  const [article, setArticle] = useState();
+
+  useEffect(() => {
+    fetchArticle();
+  }, []);
+
+  async function fetchArticle() {
+    const res = await articleServices.DetailArticle({ id});
+    setArticle(res.data);
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -18,7 +33,7 @@ export function DetailArticlePage() {
       <div className="w-11/12 mt-6">
         <div>
           <img
-            src="https://picsum.photos/200/300"
+            src={article?.image}
             alt="Article"
             className="w-full"
           />
@@ -26,17 +41,20 @@ export function DetailArticlePage() {
 
         <div className="mt-4">
           <h2 className="f-h2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-            voluptates.
+            {
+              article?.title
+            }
           </h2>
-          <p className="f-p2-r mt-2">28 Jan 2024</p>
+          <p className="f-p2-r mt-2">{
+            new Date(article?.createdAt).toDateString()
+          }</p>
         </div>
 
         <div className="mt-4">
           <p className="f-p1-r text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-            voluptates. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Quisquam, voluptates.
+            {
+              article?.content
+            }
           </p>
         </div>
 
