@@ -23,8 +23,25 @@ export class UserServices {
 
   async UpdateProfile({ name }) {
     try {
-      const res = await axios.post(`${baseUrl}/user`, {name}, {
+      const res = await axios.put(`${baseUrl}/user`, {name}, {
         headers,
+      });
+      if (res.status === 200) {
+        return res.data;
+      } else {
+        handleOtherStatusCodes(res.status);
+        return false;
+      }
+    } catch (error) {
+      handleAxiosError(error);
+      return false;
+    }
+  }
+
+  async UpdateImage(formData) {
+    try {
+      const res = await axios.put(`${baseUrl}/user/image`, formData, {
+        headers: headersFormData,
       });
       if (res.status === 200) {
         return res.data;

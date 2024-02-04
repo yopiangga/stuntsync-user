@@ -8,23 +8,31 @@ import LoadComponent from "src/components/load";
 import { NavbarDefaultComponent } from "src/components/navbar";
 import imageUser from "src/assets/images/user.png";
 import { ButtonComponent } from "src/components/button";
+import { UserServices } from "src/services/UserServices";
+import toast from "react-hot-toast";
 
 export function EditProfilePage() {
   const navigate = useNavigate();
+  const userServices = new UserServices();
 
-  const [editUser, setEditUser] = useState({
-    name: "Alfian Prisma Yopiangga",
-    gender: "Pria",
-    email: "yopigambyok@gmail.com",
-    address: "RT 14 RW 05 Desa Gambyok Kecamatan Grogol Kabupaten Kediri",
-  });
+  const {user} = useContext(UserContext)
+
+  const [editUser, setEditUser] = useState({});
   const [loading, setLoading] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setEditUser({
+      name: user.name,
+      email: user.email
+    })
+
+    setSelectedImage(user.image)
+  }, []);
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setEditUser({ ...editUser, [e.target.name]: e.target.value });
   };
 
@@ -40,15 +48,27 @@ export function EditProfilePage() {
 
       reader.readAsDataURL(file);
     }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await userServices.UpdateImage(formData);
+
+    if (res) {
+      toast.success(res.message);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    setLoading(false);
+    const res = await userServices.UpdateProfile(editUser);
 
-    navigate("/profile");
+    if (res) {
+      toast.success(res.message);
+      navigate("/my-profile");
+
+    }
   };
 
   return (
@@ -57,7 +77,7 @@ export function EditProfilePage() {
       <div className="w-11/12 mt-6">
         <div className="flex flex-col items-center">
           <div className="rounded-circle mb-2">
-            <img src={imageUser} className="rounded-full w-20 h-20" />
+            <img src={selectedImage} className="rounded-full w-20 h-20" />
             <input
               id="photo"
               type="file"
@@ -83,41 +103,22 @@ export function EditProfilePage() {
                 placeholder="Fullname"
                 value={editUser.name}
                 name="name"
-                onChange={handleChange}
+                handleChange={handleChange}
               />
             </div>
-            <div className="mb-3">
-              <InputSelect
-                label="Gender"
-                options={[
-                  { label: "Pria", value: "pria" },
-                  { label: "Wanita", value: "wanita" },
-                ]}
-                value={editUser.gender}
-                name="gender"
-                onChange={handleChange}
-              />
-            </div>
+           
             <div className="mb-3">
               <InputDefault
                 label="Email"
                 placeholder="contoh@email.com"
                 value={editUser.email}
                 name="email"
-                onChange={handleChange}
+                handleChange={handleChange}
               />
             </div>
-            <div className="mb-3">
-              <InputTextarea
-                label="Address"
-                placeholder="Your address"
-                value={editUser.address}
-                name="address"
-                onChange={handleChange}
-              />
-            </div>
+
             <div className="mb-3 mt-6 flex gap-2 flex-col">
-              <ButtonComponent title="Save Changes" action={async () => {}} />
+              <ButtonComponent title="Save Changes" type="submit" />
 
               <ButtonComponent
                 title="Cancel"
