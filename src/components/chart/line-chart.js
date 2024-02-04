@@ -27,10 +27,10 @@ export const options = {
     legend: {
       position: "top",
     },
-    title: {
-      display: true,
-      text: "Chart.js Line Chart",
-    },
+    // title: {
+    //   display: true,
+    //   text: "Chart.js Line Chart",
+    // },
   },
 };
 
@@ -60,6 +60,6 @@ export const data = {
   ],
 };
 
-export function LineChartComponent() {
+export function LineChartComponent({data}) {
   return <Line options={options} data={data} />;
 }

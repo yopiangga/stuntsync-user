@@ -24,4 +24,21 @@ export class MonitoringServices {
         return false;
         }
     }
+
+    async MonitoringByBabyId({ babyId }) {
+        try {
+        const res = await axios.get(`${baseUrl}/monitoring/baby/${babyId}`, {
+            headers,
+        });
+        if (res.status === 200) {
+            return res.data;
+        } else {
+            handleOtherStatusCodes(res.status);
+            return false;
+        }
+        } catch (error) {
+        handleAxiosError(error);
+        return false;
+        }
+    }
 }

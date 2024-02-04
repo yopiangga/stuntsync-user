@@ -1,14 +1,32 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LineChartComponent } from "src/components/chart/line-chart";
 import { HeaderSection } from "src/components/header/header-section";
+import { InputSelect } from "src/components/input/input-select";
 import { NavbarComponent } from "src/components/navbar";
 import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarComponent";
 import { StuntingStatus } from "src/components/stunting/stunting-status";
 import { UserContext } from "src/context/UserContext";
+import { MonitoringServices } from "src/services/MonitoringServices";
 
 export function DashboardPage() {
+  const monitoringServices = new MonitoringServices();
+
   const { user } = useContext(UserContext);
-  console.log(user);
+
+  const [monitorings, setMonitorings] = useState([]);
+
+  useEffect(() => {
+    fetchMonitoring({ babyId: user.baby[0].id });
+  }, []);
+
+  async function fetchMonitoring({babyId = 
+  user.baby[0].id}){
+    const res = await monitoringServices.MonitoringByBabyId({ babyId });
+
+    if (res) {
+      setMonitorings(res.data);
+    }
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -56,8 +74,30 @@ export function DashboardPage() {
           <HeaderSection label="Growth Chart Overview" />
         </div>
 
-        <div>
-          <LineChartComponent />
+        <div className="mt-3">
+          <InputSelect 
+            label="Select Baby"
+            options={user.baby.map((baby) => ({
+              label: baby.name,
+              value: baby.id,
+            }))}
+          />
+        </div>
+
+        <div className="mt-2">
+          <LineChartComponent data={
+            {
+              labels: monitorings.map((monitoring) => new Date(monitoring.createdAt).toLocaleDateString()),
+              datasets: [
+                {
+                  label: "Height",
+                  data: monitorings.map((monitoring) => monitoring.height),
+                  borderColor: "rgb(255, 99, 132)",
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                },
+              ],
+            }
+          } />
         </div>
       </div>
 
