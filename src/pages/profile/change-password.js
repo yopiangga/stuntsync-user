@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "src/components/button";
 import { NavbarDefaultComponent } from "src/components/navbar";
+import { UserServices } from "src/services/UserServices";
 
 export function ChangePasswordPage() {
   const navigate = useNavigate();
+  const userServices = new UserServices();
 
   const [editPassword, setEditPassword] = useState({
     oldPassword: "",
@@ -57,6 +60,19 @@ export function ChangePasswordPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validation = validationStage(editPassword);
+
+    if (validation == false) {
+      return;
+    }
+
+    const res = await userServices.UpdatePassword(editPassword);
+
+    if (res){
+      toast.success(res.message)
+      navigate("/my-profile");
+    }
   };
 
   return (

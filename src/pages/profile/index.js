@@ -5,6 +5,7 @@ import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarCompone
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "src/context/UserContext";
+import { cookies } from "src/services/config";
 
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ export function ProfilePage() {
                 <img src={imageUser} className="rounded-full w-20 h-20" />
               </div>
               <div className="">
-                <h4 className="f-h4">Alfian Prisma Yopiangga</h4>
-                <p className="f-p1-r">Pria</p>
+                <h4 className="f-h4">{user.name}</h4>
+                {/* <p className="f-p1-r">{}</p> */}
                 <button
                   className="bg-blue-main rounded-full px-3 py-1"
                   onClick={() => {
@@ -35,18 +36,19 @@ export function ProfilePage() {
             </div>
             <div className="mb-3">
               <p className="f-p1-sb">Email</p>
-              <p className="f-p1-r">yopigambyok@gmail.com</p>
+              <p className="f-p1-r">{user.email}</p>
             </div>
             <div className="mb-3">
-              <p className="f-p1-sb">Alamat</p>
+              <p className="f-p1-sb">Posyandu</p>
               <p className="f-p1-r">
-                RT 14 RW 05 Desa Gambyok Kecamatan Grogol Kabupaten Kediri
+                {user.posyandu ? user.posyandu.name : "Not registered"}
               </p>
             </div>
             <div className="mb-3 mt-6 flex gap-2 flex-col">
               <ButtonComponent
                 title="Log Out"
                 action={async () => {
+                  cookies.remove("token");
                   setUser(null);
                   navigate("/sign-in");
                 }}
