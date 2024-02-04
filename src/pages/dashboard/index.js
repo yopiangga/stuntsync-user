@@ -77,6 +77,7 @@ export function DashboardPage() {
         <div className="mt-3">
           <InputSelect 
             label="Select Baby"
+            placeholder="Select Baby"
             options={user.baby.map((baby) => ({
               label: baby.name,
               value: baby.id,
@@ -84,7 +85,7 @@ export function DashboardPage() {
           />
         </div>
 
-        <div className="mt-2">
+        <div className="mt-4">
           <LineChartComponent 
           // data={
           //   {
