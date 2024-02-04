@@ -6,8 +6,43 @@ import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarCompone
 import { FiCheck } from "react-icons/fi";
 import { LineChartComponent } from "src/components/chart/line-chart";
 import iconGrowth from "src/assets/icon/growth.svg";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "src/context/UserContext";
+import { MonitoringServices } from "src/services/MonitoringServices";
+import { RecomendationServices } from "src/services/RecomendationServices";
+import { RecomendationCheckServices } from "src/services/RecomendationCheckServices";
 
 export function MonitoringPage() {
+  const monitoringServices = new MonitoringServices();
+  const recomendationServices = new RecomendationServices();
+  const recomendationCheckServices = new RecomendationCheckServices();
+
+  const {user} = useContext(UserContext);
+  const [recomendations, setRecomendations] = useState([]);
+  const [monitorings, setMonitorings] = useState([]);
+
+  useEffect(() => {
+    fetchMonitoring({ babyId: user.baby[0].id });
+    fetchRecomendations({ babyId: user.baby[0].id });
+  }, []);
+
+  async function fetchMonitoring({babyId = user.baby[0].id}){
+    const res = await monitoringServices.MonitoringByBabyId({ babyId });
+
+    if (res) {
+      setMonitorings(res.data);
+    }
+  }
+
+  async function fetchRecomendations({babyId = user.baby[0].id}){
+    const res = await recomendationServices.RecomendationByBabyId({ babyId });
+
+    console.log(res);
+    if (res) {
+      setRecomendations(res.data);
+    }
+  }
+
   return (
     <div className="flex flex-col items-center">
       <NavbarDefaultComponent title="Child Monitoring Hub" />
@@ -15,12 +50,19 @@ export function MonitoringPage() {
       <div className="relative bg-white w-full flex justify-center">
         <div className="absolute w-full h-14 bg-blue-main"></div>
         <div className="w-11/12 relative">
-          <StuntingStatus
-            name={"Arya Putra"}
-            // image={null}
-            status={"stunting"}
-            age={"2y, 2 month"}
-          />
+        {user.baby.length > 0 ? (
+            <StuntingStatus
+              name={user.baby[0].name}
+              image={user.baby[0].image}
+              status={"stunting"}
+              age={
+                Math.floor(
+                  (new Date() - new Date(user.baby[0].dob)) /
+                    (1000 * 60 * 60 * 24 * 30)
+                ) + " months"
+              }
+            />
+          ) : null}
         </div>
       </div>
 
@@ -46,66 +88,65 @@ export function MonitoringPage() {
         </div>
 
         <div className="mt-0">
-          <LineChartComponent />
+        <LineChartComponent data={
+            {
+              labels: monitorings.map((monitoring) => new Date(monitoring.createdAt).toLocaleDateString()),
+              datasets: [
+                {
+                  label: "Height",
+                  data: monitorings.map((monitoring) => monitoring.height),
+                  borderColor: "rgb(255, 99, 132)",
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                },
+              ],
+            }
+          } />
         </div>
 
         <div className="mt-6">
           <HeaderSection label="Recomendations" />
         </div>
 
-        <div className="mt-4 flex flex-col gap-4">
-          <CardRecomendation
-            title="More fruits and vegetables"
-            description="Include more fruits and vegetables in their diet."
-            check={true}
-            handleCheck={() => {}}
-            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
-          />
-          <CardRecomendation
-            title="Proteins and carbohydrates."
-            description="Ensure a good balance of proteins and carbohydrates."
-            check={false}
-            handleCheck={() => {}}
-            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
-          />
-          <CardRecomendation
-            title="Regular intake of dairy"
-            description="Encourage regular intake of dairy for calcium."
-            check={false}
-            handleCheck={() => {}}
-            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
-          />
-          <CardRecomendation
-            title="Schedule regular activity"
-            description="Schedule regular physical activity for at least 30 minutes a day."
-            check={false}
-            handleCheck={() => {}}
-            icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
-          />
+        <div className="mt-4 flex flex-col gap-2">
+          {
+            recomendations.map((recomendation, index) => (
+              <CardRecomendation
+                key={"recomendation" + index}
+                title={recomendation.title}
+                description={recomendation.desc}
+                check={
+                  // date now - date recomendation checks last more than qty / 30 days
+                  (new Date() - new Date(recomendation.checks[recomendation.checks.length - 1].createdAt)) / (1000 * 60 * 60 * 24) > 30
+                }
+                handleCheck={async () => {
+                  const res = await recomendationCheckServices.CreateRecomendationCheck({ recomendationId: recomendation.id });
+                  console.log(res);
+                  if (res) {
+                    fetchRecomendations({ babyId: user.baby[0].id });
+                  }
+                }}
+                icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
+              />
+            ))
+          }
+         
         </div>
 
         <div className="mt-6">
           <HeaderSection label="Resume Activity (month)" />
         </div>
 
-        <div className="mt-4 flex flex-col gap-4">
-          <CardResult
-            title="Schedule regular activity"
-            description="Schedule regular physical activity for at least 30 minutes a day."
-            percent={60}
-          />
-
-          <CardResult
-            title="Schedule regular activity"
-            description="Schedule regular physical activity for at least 30 minutes a day."
-            percent={80}
-          />
-
-          <CardResult
-            title="Schedule regular activity"
-            description="Schedule regular physical activity for at least 30 minutes a day."
-            percent={100}
-          />
+        <div className="mt-4 flex flex-col gap-2">
+          {
+            recomendations.map((recomendation, index) => (
+              <CardResult
+                key={"recomendation-result" + index}
+                title={recomendation.title}
+                description={recomendation.desc}
+                percent={recomendation.checks.length / recomendation.qty * 100}
+              />
+            ))
+          }
         </div>
       </div>
 
@@ -135,18 +176,18 @@ function CardStatus({ title, value, date, icon }) {
 
 function CardRecomendation({ title, description, icon, check, handleCheck }) {
   return (
-    <div className="w-full bg-white rounded-xl shadow-s1 p-4 text-center grid grid-cols-12 gap-4">
-      <div className="col-span-3">
+    <div className="w-full bg-white rounded-xl shadow-lg p-4 text-center flex gap-3">
+      <div className="w-16 h-16">
         <img
           src={icon}
-          className="w-20 h-20 object-cover bg-slate-200 overflow-hidden rounded-xl"
+          className="w-16 h-16 object-cover bg-slate-200 overflow-hidden rounded-xl"
         />
       </div>
-      <div className="col-span-7 text-left">
-        <p className="f-p2-sb mt-2">{title}</p>
+      <div className="w-7/12 text-left">
+        <p className="f-p2-sb mt-0">{title}</p>
         <p className="f-p2-r text-gray-500 mt-1">{description}</p>
       </div>
-      <div className="col-span-2 flex items-center justify-end">
+      <div className="grow flex items-center justify-end">
         <button
           type="button"
           onClick={handleCheck}
@@ -163,10 +204,10 @@ function CardRecomendation({ title, description, icon, check, handleCheck }) {
 
 function CardResult({ title, description, icon, percent }) {
   return (
-    <div className="w-full bg-white rounded-xl shadow-s1 p-4 text-center grid grid-cols-12 gap-4">
-      <div className="col-span-3">
+    <div className="w-full bg-white rounded-xl shadow-lg p-4 text-center flex gap-3">
+      <div className="w-16">
         <div
-          className={`w-20 h-20 object-cover bg-opacity-70 overflow-hidden rounded-xl flex justify-center items-center ${
+          className={`w-16 h-16 object-cover bg-opacity-70 overflow-hidden rounded-xl flex justify-center items-center ${
             percent > 80
               ? "bg-green-main"
               : percent > 60
@@ -177,8 +218,8 @@ function CardResult({ title, description, icon, percent }) {
           <h5 className="f-h5 text-white">{percent}%</h5>
         </div>
       </div>
-      <div className="col-span-9 text-left">
-        <p className="f-p2-sb mt-2">{title}</p>
+      <div className="w-8/12 text-left">
+        <p className="f-p2-sb mt-0">{title}</p>
         <p className="f-p2-r text-gray-500 mt-1">{description}</p>
       </div>
     </div>
