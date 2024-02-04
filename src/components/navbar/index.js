@@ -12,7 +12,15 @@ export function NavbarComponent(props) {
         <div className="grow">
           <div className="flex gap-2 items-center">
             <FiCalendar />
-            <p className="f-p2-r">Tue, 25 Jan 2024</p>
+            <p className="f-p2-r">{
+              new Date().toLocaleDateString('en-GB', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })
+            }
+            </p>
           </div>
           <h5 className="f-h5 line-clamp-1 mt-2">Hello, {user.name}</h5>
         </div>

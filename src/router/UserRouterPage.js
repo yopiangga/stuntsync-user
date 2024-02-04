@@ -9,7 +9,7 @@ import { MonitoringPage } from "src/pages/monitoring";
 import { ProfilePage } from "src/pages/profile";
 import { ChangePasswordPage } from "src/pages/profile/change-password";
 import { EditProfilePage } from "src/pages/profile/edit-profile";
-import { ScreeningPage } from "src/pages/screening";
+import { MonitoringFormPage } from "src/pages/monitoring-form";
 
 export default function UserRouterPage() {
   return (
@@ -25,7 +25,7 @@ export default function UserRouterPage() {
           <Route path="/my-profile" element={<ProfilePage />} />
           <Route path="/edit-profile" element={<EditProfilePage />} />
           <Route path="/change-password" element={<ChangePasswordPage />} />
-          <Route path="/screening" element={<ScreeningPage />} />
+          <Route path="/monitoring-form" element={<MonitoringFormPage />} />
 
           {/* all path redirect to path "/" */}
         </Routes>

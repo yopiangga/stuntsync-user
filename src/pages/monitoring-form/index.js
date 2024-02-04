@@ -7,14 +7,25 @@ import LoadComponent from "src/components/load";
 import { NavbarDefaultComponent } from "src/components/navbar";
 import imageUser from "src/assets/images/user.png";
 import { ButtonComponent } from "src/components/button";
+import { UserContext } from "src/context/UserContext";
+import { MonitoringServices } from "src/services/MonitoringServices";
+import toast from "react-hot-toast";
 
-export function ScreeningPage() {
+export function MonitoringFormPage() {
   const navigate = useNavigate();
+  const {user} = useContext(UserContext)
+  const monitoringServices = new MonitoringServices();
 
-  const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    month: new Date().toISOString(),
+  });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (user.baby.length > 0) {
+      setFormData({ ...formData, babyId: user.baby[0].id});
+    }
+
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,11 +33,19 @@ export function ScreeningPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    setLoading(false);
-
-    navigate("/profile");
+    // console.log(formData);
+    // return
+    
+    const res = await monitoringServices.CreateMonitoring({
+      babyId: formData.babyId,
+      height: formData.height,
+      month: formData.month,
+    });
+    if (res) {
+      toast.success(res.message);
+      navigate("/monitoring");
+    }
   };
 
   return (
@@ -42,27 +61,44 @@ export function ScreeningPage() {
 
         <form className="mt-4" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <InputDefault
-              label="Weight"
-              placeholder="Your baby's weight"
-              value={formData.weight}
-              name="weight"
-              onChange={handleChange}
+            <InputSelect 
+              label={"Baby"}
+              name={"babyId"}
+              value={formData.babyId}
+              handleChange={handleChange}
+              placeholder={"Select Baby"}
+              options={
+                user.baby.map((baby) => {
+                  return { value: baby.id, label: baby.name }
+                })
+              }
             />
           </div>
-
           <div className="mb-3">
             <InputDefault
               label="Height"
               placeholder="Your baby's height"
               value={formData.height}
               name="height"
-              onChange={handleChange}
+              handleChange={handleChange}
+              required={true}
+            />
+          </div>
+          <div className="mb-3">
+            <InputDefault
+              label="Month"
+              placeholder=""
+              value={new Date(formData.month).toISOString().split('T')[0]}
+              name="month"
+              handleChange={(e) => {
+                setFormData({ ...formData, month: new Date(e.target.value).toISOString() });
+              }}
+              type="date"
             />
           </div>
 
           <div className="mb-3 mt-6 flex gap-2 flex-col">
-            <ButtonComponent title="Save and Submit" action={async () => {}} />
+            <ButtonComponent title="Save and Submit" type="submit" />
 
             <ButtonComponent
               title="Cancel"

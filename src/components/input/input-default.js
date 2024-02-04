@@ -6,7 +6,7 @@ export function InputDefault({
   type = "text",
   required = false,
   placeholder = "",
-  color = "primary",
+  color = "dark",
 }) {
   return (
     <div className="flex flex-col">

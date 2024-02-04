@@ -32,7 +32,7 @@ export function BottomNavbarComponent(props) {
       <div className="relative w-56 flex justify-center">
         <button
           onClick={() => {
-            navigate("/screening");
+            navigate("/monitoring-form");
           }}
           className="bg-blue-main w-12 h-12 flex justify-center items-center rounded-xl text-white absolute -top-7"
         >

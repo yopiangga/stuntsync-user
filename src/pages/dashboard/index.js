@@ -1,10 +1,15 @@
+import { useContext } from "react";
 import { LineChartComponent } from "src/components/chart/line-chart";
 import { HeaderSection } from "src/components/header/header-section";
 import { NavbarComponent } from "src/components/navbar";
 import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarComponent";
 import { StuntingStatus } from "src/components/stunting/stunting-status";
+import { UserContext } from "src/context/UserContext";
 
 export function DashboardPage() {
+  const { user } = useContext(UserContext);
+  console.log(user);
+
   return (
     <div className="flex flex-col items-center">
       <NavbarComponent />
@@ -19,12 +24,19 @@ export function DashboardPage() {
         </div>
 
         <div className="mt-4">
-          <StuntingStatus
-            name={"Arya Putra"}
-            // image={null}
-            status={"stunting"}
-            age={"2y, 2 month"}
-          />
+          {user.baby.length > 0 ? (
+            <StuntingStatus
+              name={user.baby[0].name}
+              image={user.baby[0].image}
+              status={"stunting"}
+              age={
+                Math.floor(
+                  (new Date() - new Date(user.baby[0].dob)) /
+                    (1000 * 60 * 60 * 24 * 30)
+                ) + " months"
+              }
+            />
+          ) : null}
         </div>
 
         <div className="mt-6">

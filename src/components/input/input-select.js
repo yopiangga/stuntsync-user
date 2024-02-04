@@ -7,7 +7,7 @@ export function InputSelect({
   size = "md",
   placeholder = "",
   options = [],
-  color = "primary",
+  color = "dark",
 }) {
   return (
     <div className="flex flex-col">
