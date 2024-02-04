@@ -7,22 +7,21 @@ import iconEye from "src/assets/icon/eye.svg";
 import iconComment from "src/assets/icon/comment.svg";
 import iconPlayVideo from "src/assets/icon/play-video.svg";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-export function ArticlePage() {
+export function EducationPage() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log("ArticlePage");
-  }, []);
 
   return (
     <div className="flex flex-col items-center">
-      <NavbarDefaultComponent title="Articles" type="dark" />
+      <NavbarDefaultComponent title="Education" type="dark" />
 
       <div className="w-11/12 mt-6">
         <div>
           <SearchComponent />
+        </div>
+
+        <div className="mt-4">
+          <CountsComponent />
         </div>
 
         <div className="mt-6">
@@ -37,6 +36,29 @@ export function ArticlePage() {
           <ArticlesComponent />
         </div>
 
+        <div className="mt-4">
+          <button onClick={
+            () => {
+              navigate("/article");
+            }
+          } className="f-p2-r bg-blue-main text-white py-1 px-3 rounded-lg">More Article</button>
+        </div>
+
+        <div className="mt-6">
+          <HeaderSection label="Short Videos" />
+        </div>
+
+        <div className="mt-4">
+          <VideosComponent />
+        </div>
+
+        <div className="mt-4">
+          <button onClick={
+            () => {
+              navigate("/video");
+            }
+          } className="f-p2-r bg-blue-main text-white py-1 px-3 rounded-lg">More Video</button>
+        </div>
       </div>
 
       <br />
@@ -137,6 +159,43 @@ function ArticleCard() {
       </p>
       <div className="mt-2">
         <PostAction />
+      </div>
+    </button>
+  );
+}
+
+function VideosComponent() {
+  return (
+    <div className="w-full grid grid-cols-1 gap-2">
+      <VideoCard />
+      <VideoCard />
+    </div>
+  );
+}
+
+function VideoCard() {
+  const navigate = useNavigate();
+
+  return (
+    <button
+      onClick={() => {
+        navigate("/detail-video/1");
+      }}
+      className="w-full bg-white rounded-xl shadow-s1 p-4 gap-4 grid grid-cols-12 text-left"
+    >
+      <div className="col-span-3 rounded-xl overflow-hidden">
+        <img
+          className="object-cover w-full h-full"
+          src="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
+        />
+      </div>
+      <div className="col-span-9">
+        <p className="f-p2-m">
+          Smart Snacking for Little Ones: Nutritious Choices
+        </p>
+        <div className="mt-2">
+          <PostAction />
+        </div>
       </div>
     </button>
   );

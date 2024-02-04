@@ -41,10 +41,10 @@ export function BottomNavbarComponent(props) {
       </div>
       <MenuCard
         icon={MdOutlineArticle}
-        title="Article"
+        title="Education"
         active={isArticle}
         handleClick={() => {
-          navigate("/article");
+          navigate("/education");
         }}
       />
       <MenuCard
