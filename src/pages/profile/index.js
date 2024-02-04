@@ -5,7 +5,6 @@ import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarCompone
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "src/context/UserContext";
-import { cookies } from "src/services/config";
 
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -48,7 +47,7 @@ export function ProfilePage() {
               <ButtonComponent
                 title="Log Out"
                 action={async () => {
-                  cookies.remove("token");
+                  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                   setUser(null);
                   navigate("/sign-in");
                 }}
