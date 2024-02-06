@@ -7,6 +7,8 @@ import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarCompone
 import { StuntingStatus } from "src/components/stunting/stunting-status";
 import { UserContext } from "src/context/UserContext";
 import { MonitoringServices } from "src/services/MonitoringServices";
+import { MALE_GRAPH } from "src/constant/male-graph";
+import { FEMALE_GRAPH } from "src/constant/female-graph";
 
 export function DashboardPage() {
   const monitoringServices = new MonitoringServices();
@@ -14,17 +16,54 @@ export function DashboardPage() {
   const { user } = useContext(UserContext);
 
   const [monitorings, setMonitorings] = useState([]);
+  const [selectedBaby, setSelectedBaby] = useState(user.baby[0]);
 
   useEffect(() => {
-    fetchMonitoring({ babyId: user.baby[0].id });
+    fetchMonitoring({ babyId: user.baby[0].id ?? 0 });
   }, []);
 
-  async function fetchMonitoring({babyId = 
-  user.baby[0].id}){
+  async function fetchMonitoring({ babyId }) {
     const res = await monitoringServices.MonitoringByBabyId({ babyId });
 
     if (res) {
       setMonitorings(res.data);
+
+      if (res.data.length > 0) {
+        const dob = new Date(selectedBaby.dob);
+        const age = Math.floor(
+          (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
+        );
+
+        if (selectedBaby.gender == "male") {
+          if (MALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
+            setSelectedBaby({ ...selectedBaby, status: "danger" });
+          } else if (
+            MALE_GRAPH[age].min2sd > res.data[res.data.length - 1].height
+          ) {
+            setSelectedBaby({ ...selectedBaby, status: "danger" });
+          } else if (
+            MALE_GRAPH[age].min1sd > res.data[res.data.length - 1].height
+          ) {
+            setSelectedBaby({ ...selectedBaby, status: "warning" });
+          } else {
+            setSelectedBaby({ ...selectedBaby, status: "normal" });
+          }
+        } else {
+          if (FEMALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
+            setSelectedBaby({ ...selectedBaby, status: "danger" });
+          } else if (
+            MALE_GRAPH[age].min2sd > res.data[res.data.length - 1].height
+          ) {
+            setSelectedBaby({ ...selectedBaby, status: "danger" });
+          } else if (
+            MALE_GRAPH[age].min1sd > res.data[res.data.length - 1].height
+          ) {
+            setSelectedBaby({ ...selectedBaby, status: "warning" });
+          } else {
+            setSelectedBaby({ ...selectedBaby, status: "normal" });
+          }
+        }
+      }
     }
   }
 
@@ -46,7 +85,7 @@ export function DashboardPage() {
             <StuntingStatus
               name={user.baby[0].name}
               image={user.baby[0].image}
-              status={"stunting"}
+              status={selectedBaby.status}
               age={
                 Math.floor(
                   (new Date() - new Date(user.baby[0].dob)) /
@@ -75,20 +114,24 @@ export function DashboardPage() {
         </div>
 
         <div className="mt-3">
-          <InputSelect 
+          <InputSelect
             label="Select Baby"
             placeholder="Select Baby"
             options={user.baby.map((baby) => ({
               label: baby.name,
               value: baby.id,
             }))}
+            handleChange={(e) => {
+              // setSelectedBaby(e.target.value);
+              // fetchMonitoring({ babyId: e.target.value });
+            }}
           />
         </div>
 
         <div className="mt-4">
-          <LineChartComponent 
-          gender={user.baby[0].gender}
-          height={monitorings.map((monitoring) => monitoring.height)}
+          <LineChartComponent
+            gender={selectedBaby.gender}
+            height={monitorings.map((monitoring) => monitoring.height)}
           />
         </div>
       </div>
