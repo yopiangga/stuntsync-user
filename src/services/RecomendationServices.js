@@ -25,6 +25,27 @@ export class RecomendationServices {
         }
     }
 
+    async CreateRecomendationAuto({ babyId, month }) {
+        try {
+        const res = await axios.post(
+            `${baseUrl}/recomendation/auto`,
+            { babyId, month },
+            {
+            headers,
+            }
+        );
+        if (res.status === 200) {
+            return res.data;
+        } else {
+            handleOtherStatusCodes(res.status);
+            return false;
+        }
+        } catch (error) {
+        handleAxiosError(error);
+        return false;
+        }
+    }
+
     async RecomendationByBabyId({ babyId }) {
         try {
         const res = await axios.get(`${baseUrl}/recomendation/baby/${babyId}`, {

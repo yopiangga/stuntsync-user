@@ -10,11 +10,13 @@ import { ButtonComponent } from "src/components/button";
 import { UserContext } from "src/context/UserContext";
 import { MonitoringServices } from "src/services/MonitoringServices";
 import toast from "react-hot-toast";
+import { RecomendationServices } from "src/services/RecomendationServices";
 
 export function MonitoringFormPage() {
   const navigate = useNavigate();
   const {user} = useContext(UserContext)
   const monitoringServices = new MonitoringServices();
+  const recomendationServices = new RecomendationServices();
 
   const [formData, setFormData] = useState({
     month: new Date().toISOString(),
@@ -34,14 +36,21 @@ export function MonitoringFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(formData);
-    // return
-    
+    const baby = user.baby.find((baby) => baby.id === formData.babyId);
+    const dob = new Date(baby.dob);
+    const age = Math.floor((new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30));
+
     const res = await monitoringServices.CreateMonitoring({
       babyId: formData.babyId,
       height: formData.height,
-      month: formData.month,
+      month: age,
     });
+
+    const resRecomendation = await recomendationServices.CreateRecomendationAuto({
+      babyId: formData.babyId,
+      month: age,
+    })
+
     if (res) {
       toast.success(res.message);
       navigate("/monitoring");
@@ -82,18 +91,6 @@ export function MonitoringFormPage() {
               name="height"
               handleChange={handleChange}
               required={true}
-            />
-          </div>
-          <div className="mb-3">
-            <InputDefault
-              label="Month"
-              placeholder=""
-              value={new Date(formData.month).toISOString().split('T')[0]}
-              name="month"
-              handleChange={(e) => {
-                setFormData({ ...formData, month: new Date(e.target.value).toISOString() });
-              }}
-              type="date"
             />
           </div>
 
