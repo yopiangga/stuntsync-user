@@ -148,7 +148,7 @@ export function MonitoringPage() {
         </div>
       </div>
 
-      <div className="w-11/12 mt-2">
+      <div className="w-11/12 mt-4">
         <div className="flex w-full gap-4">
           <CardStatus
             title="Stunting Status"

@@ -45,14 +45,14 @@ export function LineChartComponent({ height, gender }) {
         datasets: [
           {
             label: "Height",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#000000",
+            backgroundColor: "#000000",
             data: height,
           },
           {
             label: "Min 3 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#D93F3F",
+            backgroundColor: "#D93F3F",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.min3sd)
@@ -60,8 +60,8 @@ export function LineChartComponent({ height, gender }) {
           },
           {
             label: "Min 2 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#F16F6F",
+            backgroundColor: "#F16F6F",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.min2sd)
@@ -69,8 +69,8 @@ export function LineChartComponent({ height, gender }) {
           },
           {
             label: "Min 1 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#FACF7C",
+            backgroundColor: "#FACF7C",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.min1sd)
@@ -78,8 +78,8 @@ export function LineChartComponent({ height, gender }) {
           },
           {
             label: "0 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#3FD9AB",
+            backgroundColor: "#3FD9AB",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.nolsd)
@@ -87,8 +87,8 @@ export function LineChartComponent({ height, gender }) {
           },
           {
             label: "Plus 1 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#6FF1CA",
+            backgroundColor: "#6FF1CA",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.plus1sd)
@@ -96,8 +96,8 @@ export function LineChartComponent({ height, gender }) {
           },
           {
             label: "Plus 2 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#6FF1CA",
+            backgroundColor: "#6FF1CA",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.plus2sd)
@@ -105,8 +105,8 @@ export function LineChartComponent({ height, gender }) {
           },
           {
             label: "Plus 3 SD",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#6FF1CA",
+            backgroundColor: "#6FF1CA",
             data:
               gender == "male"
                 ? MALE_GRAPH.map((item) => item.plus3sd)

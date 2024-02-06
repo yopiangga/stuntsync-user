@@ -14,7 +14,7 @@ export function SignInPage() {
 
   const [inputSignIn, setInputSignIn] = useState({
     email: "yopiangga@email.com",
-    password: "12345678",
+    password: "123123123",
   });
 
   function handleChange(e) {
