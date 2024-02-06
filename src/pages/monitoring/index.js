@@ -13,6 +13,7 @@ import { RecomendationServices } from "src/services/RecomendationServices";
 import { RecomendationCheckServices } from "src/services/RecomendationCheckServices";
 import { ButtonComponent } from "src/components/button";
 import { useNavigate } from "react-router-dom";
+import imageExample from "src/assets/images/default.png";
 import { monthsMale, min1sdMale, min2sdMale, min3sdMale, nolsdMale, plus1sdMale, plus2sdMale, plus3sdMale} from "src/constant/male-graph";
 import { monthsFemale, min1sdFemale, min2sdFemale, min3sdFemale, nolsdFemale, plus1sdFemale, plus2sdFemale, plus3sdFemale} from "src/constant/female-graph"
 
@@ -53,12 +54,12 @@ export function MonitoringPage() {
     <div className="flex flex-col items-center">
       {
         recomendationActive ? <div className="w-full h-screen fixed bg-black-main bg-opacity-25 z-50 flex justify-center items-center">
-            <div className="w-11/12 bg-white rounded-xl shadow-lg p-4 text-justify">
-              <h5 className="f-h5 text-center">
+            <div className="w-11/12 bg-white rounded-xl shadow-lg p-5 text-justify">
+              <h4 className="f-h4 text-center">
                 Recommendation Check
-              </h5>
+              </h4>
               <p className="f-p1-m mt-4">{recomendationActive.title}</p>
-              <p className="f-p1-r">{recomendationActive.desc}</p>
+              <p className="f-p1-r mt-1 text-justify">{recomendationActive.desc}</p>
 
               <div className="flex gap-2 mt-4">
                 <ButtonComponent
@@ -151,18 +152,7 @@ export function MonitoringPage() {
                 description={recomendation.desc}
                 qty={recomendation.qty}
                 action={async () => {setRecomendationActive(recomendation)}}
-                // check={
-                //   // date now - date recomendation checks last more than qty / 30 days
-                //   (new Date() - new Date(recomendation.checks[recomendation.checks.length - 1].createdAt)) / (1000 * 60 * 60 * 24) > 30
-                // }
-                // handleCheck={async () => {
-                //   const res = await recomendationCheckServices.CreateRecomendationCheck({ recomendationId: recomendation.id });
-                //   console.log(res);
-                //   if (res) {
-                //     fetchRecomendations({ babyId: user.baby[0].id });
-                //   }
-                // }}
-                icon="https://st4.depositphotos.com/14431644/22076/i/450/depositphotos_220767694-stock-photo-handwriting-text-writing-example-concept.jpg"
+                icon={imageExample}
               />
             ))
           }
@@ -180,7 +170,7 @@ export function MonitoringPage() {
                 key={"recomendation-result" + index}
                 title={recomendation.title}
                 description={recomendation.desc}
-                percent={recomendation.checks.length / recomendation.qty * 100}
+                percent={parseInt((recomendation.checks.length / recomendation.qty * 100))}
               />
             ))
           }
@@ -221,8 +211,8 @@ function CardRecomendation({ title, description, icon, qty, action }) {
         />
       </div>
       <div className="w-7/12 text-left">
-        <p className="f-p2-sb mt-0">{title}</p>
-        <p className="f-p2-r text-gray-500 mt-1">{description}</p>
+        <p className="f-p2-sb mt-0 line-clamp-2">{title}</p>
+        <p className="f-p2-r text-gray-500 mt-1 text-justify line-clamp-2">{description}</p>
       </div>
       <div className="w-10 h-16 flex items-center text-center">
         <p className="text-xs text-gray-500 mt-1 font-bold"><span className="text-blue-main">{qty}</span> / mth</p>
@@ -248,8 +238,8 @@ function CardResult({ title, description, icon, percent }) {
         </div>
       </div>
       <div className="w-8/12 text-left">
-        <p className="f-p2-sb mt-0">{title}</p>
-        <p className="f-p2-r text-gray-500 mt-1">{description}</p>
+        <p className="f-p2-sb mt-0 line-clamp-2">{title}</p>
+        <p className="f-p2-r text-gray-500 mt-1 text-justify line-clamp-1">{description}</p>
       </div>
     </div>
   );
