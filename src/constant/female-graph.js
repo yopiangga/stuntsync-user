@@ -1,22 +1,662 @@
-
-import graphContant from "src/constant/female-graph.json";
-
-export const monthsFemale = []
-export const min3sdFemale = []
-export const min2sdFemale = []
-export const min1sdFemale = []
-export const nolsdFemale = []
-export const plus1sdFemale = []
-export const plus2sdFemale = []
-export const plus3sdFemale = []
-
-graphContant.forEach((item) => {
-        monthsFemale.push(item.month)
-        min3sdFemale.push(item.min3sd)
-        min2sdFemale.push(item.min2sd)
-        min1sdFemale.push(item.min1sd)
-        nolsdFemale.push(item.nolsd)
-        plus1sdFemale.push(item.plus1sd)
-        plus2sdFemale.push(item.plus2sd)
-        plus3sdFemale.push(item.plus3sd)
-  })
+export const FEMALE_GRAPH = [
+      {
+        month: 0,
+        min3sd: 47.24159098,
+        min2sd: 48.10546549,
+        min1sd: 49.05492927,
+        nolsd: 50.65609671,
+        plus1sd: 52.26801941,
+        plus2sd: 53.64893509,
+        plus3sd: 55.08697954,
+        gender: "female"
+      },
+      {
+        month: 1,
+        min3sd: 49.39161409,
+        min2sd: 50.64911114,
+        min1sd: 52.01011388,
+        nolsd: 53.47960737,
+        plus1sd: 55.03419409,
+        plus2sd: 56.46503957,
+        plus3sd: 57.97773861,
+        gender: "female"
+      },
+      {
+        month: 2,
+        min3sd: 51.35901865,
+        min2sd: 52.94054908,
+        min1sd: 54.61219679,
+        nolsd: 56.0973134,
+        plus1sd: 57.6664512,
+        plus2sd: 59.18490024,
+        plus3sd: 60.79282795,
+        gender: "female"
+      },
+      {
+        month: 3,
+        min3sd: 53.15700353,
+        min2sd: 55.01344931,
+        min1sd: 56.92143105,
+        nolsd: 58.51566004,
+        plus1sd: 60.15579219,
+        plus2sd: 61.79339223,
+        plus3sd: 63.5144132,
+        gender: "female"
+      },
+      {
+        month: 4,
+        min3sd: 54.79801348,
+        min2sd: 56.89501881,
+        min1sd: 58.99961333,
+        nolsd: 60.75047459,
+        plus1sd: 62.50042731,
+        plus2sd: 64.28160505,
+        plus3sd: 66.13010826,
+        gender: "female"
+      },
+      {
+        month: 5,
+        min3sd: 56.29512976,
+        min2sd: 58.6039072,
+        min1sd: 60.89360333,
+        nolsd: 62.81762798,
+        plus1sd: 64.70284309,
+        plus2sd: 66.64504459,
+        plus3sd: 68.63143881,
+        gender: "female"
+      },
+      {
+        month: 6,
+        min3sd: 57.66382663,
+        min2sd: 60.15218872,
+        min1sd: 62.62733135,
+        nolsd: 64.7274046,
+        plus1sd: 66.76717425,
+        plus2sd: 68.88144232,
+        plus3sd: 71.01178528,
+        gender: "female"
+      },
+      {
+        month: 7,
+        min3sd: 58.92343614,
+        min2sd: 61.55184216,
+        min1sd: 64.20422289,
+        nolsd: 66.48530544,
+        plus1sd: 68.69788477,
+        plus2sd: 70.98881156,
+        plus3sd: 73.26442498,
+        gender: "female"
+      },
+      {
+        month: 8,
+        min3sd: 60.0975714,
+        min2sd: 62.8237567,
+        min1sd: 65.61802498,
+        nolsd: 68.09860436,
+        plus1sd: 70.49981976,
+        plus2sd: 72.96430496,
+        plus3sd: 75.38137263,
+        gender: "female"
+      },
+      {
+        month: 9,
+        min3sd: 61.21291161,
+        min2sd: 64.00381909,
+        min1sd: 66.87846709,
+        nolsd: 69.58494408,
+        plus1sd: 72.17877618,
+        plus2sd: 74.80421596,
+        plus3sd: 77.35355418,
+        gender: "female"
+      },
+      {
+        month: 10,
+        min3sd: 62.29618623,
+        min2sd: 65.13911672,
+        min1sd: 68.04711038,
+        nolsd: 70.9747205,
+        plus1sd: 73.74157618,
+        plus2sd: 76.50516882,
+        plus3sd: 79.17240026,
+        gender: "female"
+      },
+      {
+        month: 11,
+        min3sd: 63.36996488,
+        min2sd: 66.2726109,
+        min1sd: 69.22489869,
+        nolsd: 72.30009566,
+        plus1sd: 75.19538705,
+        plus2sd: 78.06606197,
+        plus3sd: 80.83225272,
+        gender: "female"
+      },
+      {
+        month: 12,
+        min3sd: 64.44874855,
+        min2sd: 67.42521953,
+        min1sd: 70.4665008,
+        nolsd: 73.57760916,
+        plus1sd: 76.54687023,
+        plus2sd: 79.48968376,
+        plus3sd: 82.33234311,
+        gender: "female"
+      },
+      {
+        month: 13,
+        min3sd: 65.53714003,
+        min2sd: 68.58937856,
+        min1sd: 71.72691844,
+        nolsd: 74.80285148,
+        plus1sd: 77.8015836,
+        plus2sd: 80.78267304,
+        plus3sd: 83.67712984,
+        gender: "female"
+      },
+      {
+        month: 14,
+        min3sd: 66.63094744,
+        min2sd: 69.73987632,
+        min1sd: 72.92312416,
+        nolsd: 75.96279667,
+        plus1sd: 78.96326346,
+        plus2sd: 81.95339234,
+        plus3sd: 84.87481688,
+        gender: "female"
+      },
+      {
+        month: 15,
+        min3sd: 67.72042103,
+        min2sd: 70.8527762,
+        min1sd: 74.02232357,
+        nolsd: 77.04937646,
+        plus1sd: 80.03282706,
+        plus2sd: 83.00911375,
+        plus3sd: 85.93535089,
+        gender: "female"
+      },
+      {
+        month: 16,
+        min3sd: 68.79374563,
+        min2sd: 71.9171054,
+        min1sd: 75.04871633,
+        nolsd: 78.05975144,
+        plus1sd: 81.00847889,
+        plus2sd: 83.9551666,
+        plus3sd: 86.8698772,
+        gender: "female"
+      },
+      {
+        month: 17,
+        min3sd: 69.83923955,
+        min2sd: 72.93279108,
+        min1sd: 76.03059594,
+        nolsd: 78.98973811,
+        plus1sd: 81.88892376,
+        plus2sd: 84.79782409,
+        plus3sd: 87.69274113,
+        gender: "female"
+      },
+      {
+        month: 18,
+        min3sd: 70.84605443,
+        min2sd: 73.90150322,
+        min1sd: 76.96148469,
+        nolsd: 79.83515843,
+        plus1sd: 82.67950823,
+        plus2sd: 85.54994679,
+        plus3sd: 88.4251029,
+        gender: "female"
+      },
+      {
+        month: 19,
+        min3sd: 71.80441197,
+        min2sd: 74.82074213,
+        min1sd: 77.81395879,
+        nolsd: 80.60234355,
+        plus1sd: 83.39787952,
+        plus2sd: 86.23587159,
+        plus3sd: 89.09749622,
+        gender: "female"
+      },
+      {
+        month: 20,
+        min3sd: 72.70667125,
+        min2sd: 75.68455569,
+        min1sd: 78.58655537,
+        nolsd: 81.31383675,
+        plus1sd: 84.07509732,
+        plus2sd: 86.89173903,
+        plus3sd: 89.74846968,
+        gender: "female"
+      },
+      {
+        month: 21,
+        min3sd: 73.54969375,
+        min2sd: 76.48747752,
+        min1sd: 79.31420197,
+        nolsd: 82.00075502,
+        plus1sd: 84.75068377,
+        plus2sd: 87.55944198,
+        plus3sd: 90.41808261,
+        gender: "female"
+      },
+      {
+        month: 22,
+        min3sd: 74.33764215,
+        min2sd: 77.22929981,
+        min1sd: 80.02181524,
+        nolsd: 82.69290899,
+        plus1sd: 85.46272817,
+        plus2sd: 88.27531377,
+        plus3sd: 91.1377773,
+        gender: "female"
+      },
+      {
+        month: 23,
+        min3sd: 75.08336556,
+        min2sd: 77.92169408,
+        min1sd: 80.69958643,
+        nolsd: 83.41747578,
+        plus1sd: 86.23531426,
+        plus2sd: 89.05758976,
+        plus3sd: 91.92077364,
+        gender: "female"
+      },
+      {
+        month: 24,
+        min3sd: 75.80660581,
+        min2sd: 78.59400563,
+        min1sd: 81.35279189,
+        nolsd: 84.19495732,
+        plus1sd: 87.06772883,
+        plus2sd: 89.89890563,
+        plus3sd: 92.75815912,
+        gender: "female"
+      },
+      {
+        month: 25,
+        min3sd: 76.52862523,
+        min2sd: 79.28862225,
+        min1sd: 82.04693359,
+        nolsd: 85.02372597,
+        plus1sd: 87.93319271,
+        plus2sd: 90.76969628,
+        plus3sd: 93.62403937,
+        gender: "female"
+      },
+      {
+        month: 26,
+        min3sd: 77.26492449,
+        min2sd: 80.04101175,
+        min1sd: 82.85263271,
+        nolsd: 85.8740048,
+        plus1sd: 88.79248408,
+        plus2sd: 91.63321604,
+        plus3sd: 94.48858776,
+        gender: "female"
+      },
+      {
+        month: 27,
+        min3sd: 78.01922964,
+        min2sd: 80.85683803,
+        min1sd: 83.75422747,
+        nolsd: 86.708909,
+        plus1sd: 89.61653962,
+        plus2sd: 92.46491698,
+        plus3sd: 95.3329584,
+        gender: "female"
+      },
+      {
+        month: 28,
+        min3sd: 78.78172536,
+        min2sd: 81.70695404,
+        min1sd: 84.65780213,
+        nolsd: 87.51153452,
+        plus1sd: 90.40240974,
+        plus2sd: 93.26472189,
+        plus3sd: 96.1583141,
+        gender: "female"
+      },
+      {
+        month: 29,
+        min3sd: 79.53253011,
+        min2sd: 82.54563294,
+        min1sd: 85.4883995,
+        nolsd: 88.28973175,
+        plus1sd: 91.17155685,
+        plus2sd: 94.05509797,
+        plus3sd: 96.98433977,
+        gender: "female"
+      },
+      {
+        month: 30,
+        min3sd: 80.24887962,
+        min2sd: 83.33500141,
+        min1sd: 86.24815994,
+        nolsd: 89.06263612,
+        plus1sd: 91.95428059,
+        plus2sd: 94.86740738,
+        plus3sd: 97.83852067,
+        gender: "female"
+      },
+      {
+        month: 31,
+        min3sd: 80.91298917,
+        min2sd: 84.05628967,
+        min1sd: 86.98151624,
+        nolsd: 89.84779589,
+        plus1sd: 92.77270581,
+        plus2sd: 95.72546099,
+        plus3sd: 98.74204801,
+        gender: "female"
+      },
+      {
+        month: 32,
+        min3sd: 81.51778457,
+        min2sd: 84.70628535,
+        min1sd: 87.71367346,
+        nolsd: 90.6522174,
+        plus1sd: 93.63094935,
+        plus2sd: 96.63437044,
+        plus3sd: 99.69887001,
+        gender: "female"
+      },
+      {
+        month: 33,
+        min3sd: 82.06904798,
+        min2sd: 85.29127392,
+        min1sd: 88.42793582,
+        nolsd: 91.46425119,
+        plus1sd: 94.51371183,
+        plus2sd: 97.57784539,
+        plus3sd: 100.6917732,
+        gender: "female"
+      },
+      {
+        month: 34,
+        min3sd: 82.58395855,
+        min2sd: 85.82664289,
+        min1sd: 89.08488899,
+        nolsd: 92.25507969,
+        plus1sd: 95.39164438,
+        plus2sd: 98.52296107,
+        plus3sd: 101.685856,
+        gender: "female"
+      },
+      {
+        month: 35,
+        min3sd: 83.08692043,
+        min2sd: 86.33826907,
+        min1sd: 89.66952026,
+        nolsd: 92.99684285,
+        plus1sd: 96.23126824,
+        plus2sd: 99.4295257,
+        plus3sd: 102.6371508,
+        gender: "female"
+      },
+      {
+        month: 36,
+        min3sd: 83.60401693,
+        min2sd: 86.85799378,
+        min1sd: 90.22402685,
+        nolsd: 93.68180554,
+        plus1sd: 97.00530543,
+        plus2sd: 100.2604128,
+        plus3sd: 103.5029533,
+        gender: "female"
+      },
+      {
+        month: 37,
+        min3sd: 84.15761481,
+        min2sd: 87.41267958,
+        min1sd: 90.80911895,
+        nolsd: 94.32055336,
+        plus1sd: 97.69844541,
+        plus2sd: 100.9893143,
+        plus3sd: 104.2505002,
+        gender: "female"
+      },
+      {
+        month: 38,
+        min3sd: 84.76251831,
+        min2sd: 88.0144832,
+        min1sd: 91.43627616,
+        nolsd: 94.92344363,
+        plus1sd: 98.30688037,
+        plus2sd: 101.6038965,
+        plus3sd: 104.8617772,
+        gender: "female"
+      },
+      {
+        month: 39,
+        min3sd: 85.4244783,
+        min2sd: 88.65975321,
+        min1sd: 92.06931816,
+        nolsd: 95.4895915,
+        plus1sd: 98.83453277,
+        plus2sd: 102.1047231,
+        plus3sd: 105.3339613,
+        gender: "female"
+      },
+      {
+        month: 40,
+        min3sd: 86.14091734,
+        min2sd: 89.33636808,
+        min1sd: 92.6776403,
+        nolsd: 96.01336374,
+        plus1sd: 99.28981106,
+        plus2sd: 102.5018295,
+        plus3sd: 105.6765446,
+        gender: "female"
+      },
+      {
+        month: 41,
+        min3sd: 86.90292057,
+        min2sd: 90.03277214,
+        min1sd: 93.25786716,
+        nolsd: 96.49627201,
+        plus1sd: 99.6838497,
+        plus2sd: 102.8107236,
+        plus3sd: 105.9069465,
+        gender: "female"
+      },
+      {
+        month: 42,
+        min3sd: 87.69735986,
+        min2sd: 90.74208051,
+        min1sd: 93.82510369,
+        nolsd: 96.95027326,
+        plus1sd: 100.028738,
+        plus2sd: 103.0487682,
+        plus3sd: 106.0463415,
+        gender: "female"
+      },
+      {
+        month: 43,
+        min3sd: 88.50854361,
+        min2sd: 91.45951239,
+        min1sd: 94.40236501,
+        nolsd: 97.38952055,
+        plus1sd: 100.3349888,
+        plus2sd: 103.2325671,
+        plus3sd: 106.1168217,
+        gender: "female"
+      },
+      {
+        month: 44,
+        min3sd: 89.31957988,
+        min2sd: 92.17629936,
+        min1sd: 94.99949357,
+        nolsd: 97.81831869,
+        plus1sd: 100.6098509,
+        plus2sd: 103.3770125,
+        plus3sd: 106.1401528,
+        gender: "female"
+      },
+      {
+        month: 45,
+        min3sd: 90.11406599,
+        min2sd: 92.87565979,
+        min1sd: 95.59643756,
+        nolsd: 98.22721209,
+        plus1sd: 100.8585376,
+        plus2sd: 103.4960959,
+        plus3sd: 106.1375065,
+        gender: "female"
+      },
+      {
+        month: 46,
+        min3sd: 90.87840467,
+        min2sd: 93.53574533,
+        min1sd: 96.15235102,
+        nolsd: 98.60183231,
+        plus1sd: 101.0879136,
+        plus2sd: 103.6042947,
+        plus3sd: 106.1290024,
+        gender: "female"
+      },
+      {
+        month: 47,
+        min3sd: 91.60420614,
+        min2sd: 94.14001555,
+        min1sd: 96.62738347,
+        nolsd: 98.93764583,
+        plus1sd: 101.3092794,
+        plus2sd: 103.7165371,
+        plus3sd: 106.1321315,
+        gender: "female"
+      },
+      {
+        month: 48,
+        min3sd: 92.28956559,
+        min2sd: 94.688715,
+        min1sd: 97.0132535,
+        nolsd: 99.24969642,
+        plus1sd: 101.5369197,
+        plus2sd: 103.8456623,
+        plus3sd: 106.1591934,
+        gender: "female"
+      },
+      {
+        month: 49,
+        min3sd: 92.9381953,
+        min2sd: 95.20145762,
+        min1sd: 97.36038817,
+        nolsd: 99.56843013,
+        plus1sd: 101.7824178,
+        plus2sd: 103.998542,
+        plus3sd: 106.215075,
+        gender: "female"
+      },
+      {
+        month: 50,
+        min3sd: 93.55649843,
+        min2sd: 95.70584367,
+        min1sd: 97.75219371,
+        nolsd: 99.91993831,
+        plus1sd: 102.0485546,
+        plus2sd: 104.1736535,
+        plus3sd: 106.2969576,
+        gender: "female"
+      },
+      {
+        month: 51,
+        min3sd: 94.14992638,
+        min2sd: 96.21863533,
+        min1sd: 98.23042272,
+        nolsd: 100.3041758,
+        plus1sd: 102.3275509,
+        plus2sd: 104.362201,
+        plus3sd: 106.3964718,
+        gender: "female"
+      },
+      {
+        month: 52,
+        min3sd: 94.72037896,
+        min2sd: 96.73391344,
+        min1sd: 98.75243902,
+        nolsd: 100.6924775,
+        plus1sd: 102.6052076,
+        plus2sd: 104.5522344,
+        plus3sd: 106.503217,
+        gender: "female"
+      },
+      {
+        month: 53,
+        min3sd: 95.26573665,
+        min2sd: 97.22771183,
+        min1sd: 99.22738944,
+        nolsd: 101.0485254,
+        plus1sd: 102.8676748,
+        plus2sd: 104.733024,
+        plus3sd: 106.6077959,
+        gender: "female"
+      },
+      {
+        month: 54,
+        min3sd: 95.78150213,
+        min2sd: 97.67465739,
+        min1sd: 99.59389992,
+        nolsd: 101.3518395,
+        plus1sd: 103.1058044,
+        plus2sd: 104.8971543,
+        plus3sd: 106.7030742,
+        gender: "female"
+      },
+      {
+        month: 55,
+        min3sd: 96.26367756,
+        min2sd: 98.06357558,
+        min1sd: 99.86350004,
+        nolsd: 101.6028419,
+        plus1sd: 103.3149753,
+        plus2sd: 105.0398534,
+        plus3sd: 106.7835884,
+        gender: "female"
+      },
+      {
+        month: 56,
+        min3sd: 96.71162793,
+        min2sd: 98.40292285,
+        min1sd: 100.091672,
+        nolsd: 101.8117897,
+        plus1sd: 103.4923227,
+        plus2sd: 105.1569539,
+        plus3sd: 106.8440072,
+        gender: "female"
+      },
+      {
+        month: 57,
+        min3sd: 97.12975957,
+        min2sd: 98.71548728,
+        min1sd: 100.3224581,
+        nolsd: 101.9878313,
+        plus1sd: 103.6347599,
+        plus2sd: 105.2434842,
+        plus3sd: 106.8779303,
+        gender: "female"
+      },
+      {
+        month: 58,
+        min3sd: 97.52736014,
+        min2sd: 99.02725183,
+        min1sd: 100.5689802,
+        nolsd: 102.1378169,
+        plus1sd: 103.7398432,
+        plus2sd: 105.2942463,
+        plus3sd: 106.8780317,
+        gender: "female"
+      },
+      {
+        month: 59,
+        min3sd: 97.91672762,
+        min2sd: 99.35699716,
+        min1sd: 100.8319745,
+        nolsd: 102.2725946,
+        plus1sd: 103.8090019,
+        plus2sd: 105.3063227,
+        plus3sd: 106.8377568,
+        gender: "female"
+      },
+    ]

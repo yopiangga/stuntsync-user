@@ -87,19 +87,6 @@ export function DashboardPage() {
 
         <div className="mt-4">
           <LineChartComponent 
-          // data={
-          //   {
-          //     labels: monitorings.map((monitoring) => new Date(monitoring.createdAt).toLocaleDateString()),
-          //     datasets: [
-          //       {
-          //         label: "Height",
-          //         data: monitorings.map((monitoring) => monitoring.height),
-          //         borderColor: "rgb(255, 99, 132)",
-          //         backgroundColor: "rgba(255, 99, 132, 0.5)",
-          //       },
-          //     ],
-          //   }
-          // } 
           gender={user.baby[0].gender}
           height={monitorings.map((monitoring) => monitoring.height)}
           />
