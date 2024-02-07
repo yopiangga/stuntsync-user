@@ -14,7 +14,7 @@ import { RecomendationServices } from "src/services/RecomendationServices";
 
 export function MonitoringFormPage() {
   const navigate = useNavigate();
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
   const monitoringServices = new MonitoringServices();
   const recomendationServices = new RecomendationServices();
 
@@ -24,9 +24,8 @@ export function MonitoringFormPage() {
 
   useEffect(() => {
     if (user.baby.length > 0) {
-      setFormData({ ...formData, babyId: user.baby[0].id});
+      setFormData({ ...formData, babyId: user.baby[0].id });
     }
-
   }, []);
 
   const handleChange = (e) => {
@@ -38,7 +37,9 @@ export function MonitoringFormPage() {
 
     const baby = user.baby.find((baby) => baby.id === formData.babyId);
     const dob = new Date(baby.dob);
-    const age = Math.floor((new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30));
+    const age = Math.floor(
+      (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
+    );
 
     const res = await monitoringServices.CreateMonitoring({
       babyId: formData.babyId,
@@ -46,10 +47,11 @@ export function MonitoringFormPage() {
       month: age,
     });
 
-    const resRecomendation = await recomendationServices.CreateRecomendationAuto({
-      babyId: formData.babyId,
-      month: age,
-    })
+    const resRecomendation =
+      await recomendationServices.CreateRecomendationAuto({
+        babyId: formData.babyId,
+        month: age,
+      });
 
     if (res) {
       toast.success(res.message);
@@ -68,19 +70,26 @@ export function MonitoringFormPage() {
           </p>
         </div>
 
+        <div className="bg-blue-main bg-opacity-20 p-4 rounded-xl mt-2">
+          <p className="f-p2-r text-justify">
+            I your baby is not yet registered, please register your baby first{" "}
+            <a className="text-blue-main" href="/add-baby">
+              here
+            </a>
+          </p>
+        </div>
+
         <form className="mt-4" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <InputSelect 
+            <InputSelect
               label={"Baby"}
               name={"babyId"}
               value={formData.babyId}
               handleChange={handleChange}
               placeholder={"Select Baby"}
-              options={
-                user.baby.map((baby) => {
-                  return { value: baby.id, label: baby.name }
-                })
-              }
+              options={user.baby.map((baby) => {
+                return { value: baby.id, label: baby.name };
+              })}
             />
           </div>
           <div className="mb-3">

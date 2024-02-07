@@ -11,6 +11,7 @@ import { EditProfilePage } from "src/pages/profile/edit-profile";
 import { MonitoringFormPage } from "src/pages/monitoring-form";
 import { VideoPage } from "src/pages/video";
 import { ArticlePage } from "src/pages/article";
+import { AddBabyPage } from "src/pages/add-baby";
 
 export default function UserRouterPage() {
   return (
@@ -25,6 +26,8 @@ export default function UserRouterPage() {
           <Route path="/detail-article/:id" element={<DetailArticlePage />} />
           <Route path="/video" element={<VideoPage />} />
           <Route path="/detail-video/:id" element={<DetailVideoPage />} />
+
+          <Route path="/add-baby" element={<AddBabyPage />} />
 
           <Route path="/my-profile" element={<ProfilePage />} />
           <Route path="/edit-profile" element={<EditProfilePage />} />
