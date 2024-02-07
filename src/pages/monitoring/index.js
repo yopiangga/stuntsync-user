@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import imageExample from "src/assets/images/default.png";
 import { MALE_GRAPH } from "src/constant/male-graph";
 import { FEMALE_GRAPH } from "src/constant/female-graph";
+import { InputSelect } from "src/components/input/input-select";
 
 export function MonitoringPage() {
   const navigate = useNavigate();
@@ -30,22 +31,26 @@ export function MonitoringPage() {
   const [selectedBaby, setSelectedBaby] = useState(user.baby[0]);
 
   useEffect(() => {
-    fetchMonitoring({ babyId: user.baby[0].id });
-    fetchRecomendations({ babyId: user.baby[0].id });
+    if (user.baby.length > 0) {
+      fetchMonitoring({ babyId: user.baby[0].id });
+      fetchRecomendations({ babyId: user.baby[0].id });
+    }
   }, []);
 
-  async function fetchMonitoring({ babyId = user.baby[0].id }) {
+  async function fetchMonitoring({ babyId }) {
+    const baby = user.baby.find((baby) => baby.id == babyId);
+
     const res = await monitoringServices.MonitoringByBabyId({ babyId });
 
     if (res) {
       setMonitorings(res.data);
 
-      if (res.data.length > 0) {
-        const dob = new Date(selectedBaby.dob);
-        const age = Math.floor(
-          (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
-        );
+      const dob = new Date(selectedBaby.dob);
+      const age = Math.floor(
+        (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
+      );
 
+      if (res.data.length > 0) {
         if (selectedBaby.gender == "male") {
           if (MALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
             setSelectedBaby({ ...selectedBaby, status: "danger" });
@@ -75,6 +80,16 @@ export function MonitoringPage() {
             setSelectedBaby({ ...selectedBaby, status: "normal" });
           }
         }
+      } else {
+        setSelectedBaby({
+          ...selectedBaby,
+          ...baby,
+          status: "-",
+          insight: {
+            title: "Data Empty",
+            desc: "Please input monitoring data for this baby",
+          },
+        });
       }
     }
   }
@@ -131,16 +146,15 @@ export function MonitoringPage() {
       <div className="relative bg-white w-full flex justify-center">
         <div className="absolute w-full h-14 bg-blue-main"></div>
         <div className="w-11/12 relative">
-          {user.baby.length > 0 ? (
+          {selectedBaby != null ? (
             <StuntingStatus
-              name={user.baby[0].name}
-              image={user.baby[0].image}
+              name={selectedBaby.name}
+              image={selectedBaby.image}
               status={selectedBaby.status}
               age={
                 Math.floor(
-                  (new Date().getTime() -
-                    new Date(selectedBaby.dob).getTime()) /
-                    (1000 * 3600 * 24 * 30)
+                  (new Date() - new Date(selectedBaby.dob)) /
+                    (1000 * 60 * 60 * 24 * 30)
                 ) + " months"
               }
             />
@@ -153,18 +167,30 @@ export function MonitoringPage() {
           <CardStatus
             title="Stunting Status"
             value={selectedBaby.status}
-            date={new Date(
-              monitorings[monitorings.length - 1]?.createdAt
-            ).toDateString()}
+            date={
+              monitorings.length > 0
+                ? new Date(
+                    monitorings[monitorings.length - 1]?.createdAt
+                  ).toDateString()
+                : "No Data"
+            }
             icon={iconGrowth}
           />
 
           <CardStatus
             title="Growth Progress"
-            value={monitorings[monitorings.length - 1]?.height + " cm"}
-            date={new Date(
-              monitorings[monitorings.length - 1]?.createdAt
-            ).toDateString()}
+            value={
+              monitorings.length > 0
+                ? monitorings[monitorings.length - 1]?.height + " cm"
+                : "-"
+            }
+            date={
+              monitorings.length > 0
+                ? new Date(
+                    monitorings[monitorings.length - 1]?.createdAt
+                  ).toDateString()
+                : "No Data"
+            }
             icon={iconGrowth}
           />
         </div>
@@ -173,11 +199,28 @@ export function MonitoringPage() {
           <HeaderSection label="Growth Chart Overview" />
         </div>
 
-        <div className="mt-0">
-          <LineChartComponent
-            gender={user.baby[0].gender}
-            height={monitorings.map((monitoring) => monitoring.height)}
+        <div className="mt-3">
+          <InputSelect
+            label="Select Baby"
+            placeholder="Select Baby"
+            options={user.baby.map((baby) => ({
+              label: baby.name,
+              value: baby.id,
+            }))}
+            handleChange={(e) => {
+              fetchMonitoring({ babyId: e.target.value });
+              fetchRecomendations({ babyId: e.target.value });
+            }}
           />
+        </div>
+
+        <div className="mt-4">
+          {selectedBaby != null ? (
+            <LineChartComponent
+              gender={selectedBaby.gender}
+              height={monitorings.map((monitoring) => monitoring.height)}
+            />
+          ) : null}
         </div>
 
         <div className="mt-6">
