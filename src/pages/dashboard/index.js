@@ -17,28 +17,29 @@ export function DashboardPage() {
   const { user } = useContext(UserContext);
 
   const [monitorings, setMonitorings] = useState([]);
-  const [selectedBaby, setSelectedBaby] = useState(user.baby[0]);
+  const [selectedBaby, setSelectedBaby] = useState();
 
   useEffect(() => {
-    fetchMonitoring({ babyId: user.baby[0].id ?? 0 });
+    if (user.baby.length > 0) fetchMonitoring({ babyId: user.baby[0].id });
   }, []);
 
   async function fetchMonitoring({ babyId }) {
+    const baby = user.baby.find((baby) => baby.id == babyId);
     const res = await monitoringServices.MonitoringByBabyId({ babyId });
 
     if (res) {
       setMonitorings(res.data);
+      const dob = new Date(baby.dob);
+      const age = Math.floor(
+        (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
+      );
 
       if (res.data.length > 0) {
-        const dob = new Date(selectedBaby.dob);
-        const age = Math.floor(
-          (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
-        );
-
-        if (selectedBaby.gender == "male") {
+        if (baby.gender == "male") {
           if (MALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "danger",
               insight: INSIGHT_CATEGORY_STUNTING[0],
             });
@@ -47,6 +48,7 @@ export function DashboardPage() {
           ) {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "danger",
               insight: INSIGHT_CATEGORY_STUNTING[1],
             });
@@ -55,12 +57,14 @@ export function DashboardPage() {
           ) {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "warning",
               insight: INSIGHT_CATEGORY_STUNTING[2],
             });
           } else {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "normal",
               insight: INSIGHT_CATEGORY_STUNTING[3],
             });
@@ -69,6 +73,7 @@ export function DashboardPage() {
           if (FEMALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "danger",
               insight: INSIGHT_CATEGORY_STUNTING[0],
             });
@@ -77,6 +82,7 @@ export function DashboardPage() {
           ) {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "danger",
               insight: INSIGHT_CATEGORY_STUNTING[1],
             });
@@ -85,17 +91,29 @@ export function DashboardPage() {
           ) {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "warning",
               insight: INSIGHT_CATEGORY_STUNTING[2],
             });
           } else {
             setSelectedBaby({
               ...selectedBaby,
+              ...baby,
               status: "normal",
               insight: INSIGHT_CATEGORY_STUNTING[3],
             });
           }
         }
+      } else {
+        setSelectedBaby({
+          ...selectedBaby,
+          ...baby,
+          status: "-",
+          insight: {
+            title: "Data Empty",
+            desc: "Please input monitoring data for this baby",
+          },
+        });
       }
     }
   }
@@ -114,14 +132,14 @@ export function DashboardPage() {
         </div>
 
         <div className="mt-4">
-          {user.baby.length > 0 ? (
+          {selectedBaby != null ? (
             <StuntingStatus
-              name={user.baby[0].name}
-              image={user.baby[0].image}
+              name={selectedBaby.name}
+              image={selectedBaby.image}
               status={selectedBaby.status}
               age={
                 Math.floor(
-                  (new Date() - new Date(user.baby[0].dob)) /
+                  (new Date() - new Date(selectedBaby.dob)) /
                     (1000 * 60 * 60 * 24 * 30)
                 ) + " months"
               }
@@ -134,7 +152,7 @@ export function DashboardPage() {
         </div>
 
         <div className="shadow-xl rounded-xl bg-white flex p-4 items-center gap-4 mt-4">
-          <p className="f-p2-r text-justify">{selectedBaby.insight?.desc}</p>
+          <p className="f-p2-r text-justify">{selectedBaby?.insight?.desc}</p>
         </div>
 
         <div className="mt-6">
@@ -150,17 +168,18 @@ export function DashboardPage() {
               value: baby.id,
             }))}
             handleChange={(e) => {
-              // setSelectedBaby(e.target.value);
-              // fetchMonitoring({ babyId: e.target.value });
+              fetchMonitoring({ babyId: e.target.value });
             }}
           />
         </div>
 
         <div className="mt-4">
-          <LineChartComponent
-            gender={selectedBaby.gender}
-            height={monitorings.map((monitoring) => monitoring.height)}
-          />
+          {selectedBaby != null ? (
+            <LineChartComponent
+              gender={selectedBaby.gender}
+              height={monitorings.map((monitoring) => monitoring.height)}
+            />
+          ) : null}
         </div>
       </div>
 
