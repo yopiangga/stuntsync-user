@@ -13,8 +13,8 @@ export function SignInPage() {
   const { user, setUser } = useContext(UserContext);
 
   const [inputSignIn, setInputSignIn] = useState({
-    email: "yopiangga@email.com",
-    password: "123123123",
+    email: "",
+    password: "",
   });
 
   function handleChange(e) {
