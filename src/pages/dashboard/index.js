@@ -9,6 +9,7 @@ import { UserContext } from "src/context/UserContext";
 import { MonitoringServices } from "src/services/MonitoringServices";
 import { MALE_GRAPH } from "src/constant/male-graph";
 import { FEMALE_GRAPH } from "src/constant/female-graph";
+import { INSIGHT_CATEGORY_STUNTING } from "src/constant/insight-category-stunting";
 
 export function DashboardPage() {
   const monitoringServices = new MonitoringServices();
@@ -36,31 +37,63 @@ export function DashboardPage() {
 
         if (selectedBaby.gender == "male") {
           if (MALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "danger",
+              insight: INSIGHT_CATEGORY_STUNTING[0],
+            });
           } else if (
             MALE_GRAPH[age].min2sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "danger",
+              insight: INSIGHT_CATEGORY_STUNTING[1],
+            });
           } else if (
             MALE_GRAPH[age].min1sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "warning" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "warning",
+              insight: INSIGHT_CATEGORY_STUNTING[2],
+            });
           } else {
-            setSelectedBaby({ ...selectedBaby, status: "normal" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "normal",
+              insight: INSIGHT_CATEGORY_STUNTING[3],
+            });
           }
         } else {
           if (FEMALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "danger",
+              insight: INSIGHT_CATEGORY_STUNTING[0],
+            });
           } else if (
             MALE_GRAPH[age].min2sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "danger",
+              insight: INSIGHT_CATEGORY_STUNTING[1],
+            });
           } else if (
             MALE_GRAPH[age].min1sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "warning" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "warning",
+              insight: INSIGHT_CATEGORY_STUNTING[2],
+            });
           } else {
-            setSelectedBaby({ ...selectedBaby, status: "normal" });
+            setSelectedBaby({
+              ...selectedBaby,
+              status: "normal",
+              insight: INSIGHT_CATEGORY_STUNTING[3],
+            });
           }
         }
       }
@@ -100,13 +133,8 @@ export function DashboardPage() {
           <HeaderSection label="Stunting Insight" />
         </div>
 
-        <div className="shadow-s1 rounded-xl bg-white flex p-4 items-center gap-4 mt-4">
-          <p className="f-p2-r text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
+        <div className="shadow-xl rounded-xl bg-white flex p-4 items-center gap-4 mt-4">
+          <p className="f-p2-r text-justify">{selectedBaby.insight?.desc}</p>
         </div>
 
         <div className="mt-6">
