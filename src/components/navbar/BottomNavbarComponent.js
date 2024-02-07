@@ -8,7 +8,8 @@ export function BottomNavbarComponent(props) {
   const path = window.location.pathname;
   const isHome = path == "/";
   const isMonitoring = path == "/monitoring";
-  const isArticle = path == "/article";
+  const isArticle =
+    path == "/education" || path == "/article" || path == "/video";
   const isProfile = path == "/my-profile";
 
   return (
