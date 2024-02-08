@@ -80,12 +80,12 @@ export function ArticleCard({ article }) {
       onClick={() => {
         navigate("/detail-article/" + article?.id);
       }}
-      className="w-full bg-white rounded-xl shadow-s1 p-4 flex flex-col text-left"
+      className="w-full bg-white rounded-xl shadow-s1 p-4 flex flex-col justify-between text-left"
     >
       {/* <div className="bg-blue-secondary py-1 px-3 text-blue-main rounded-full w-fit">
           <p className="f-p2-r">Wellness</p>
         </div> */}
-      <p className="f-p2-m mt-2">{article?.title}</p>
+      <p className="f-p2-m mt-2 line-clamp-3">{article?.title}</p>
       <div className="mt-2">
         <PostAction />
       </div>
