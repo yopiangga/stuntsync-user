@@ -4,6 +4,7 @@ import iconComment from "src/assets/icon/comment.svg";
 import iconPlayVideo from "src/assets/icon/play-video.svg";
 import { FiArrowUpRight, FiSearch, FiVideo } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import youtubeThumbnail from "youtube-thumbnail";
 
 export function SearchComponent() {
   return (
@@ -104,6 +105,7 @@ export function VideosComponent({ videos }) {
 
 export function VideoCard({ video }) {
   const navigate = useNavigate();
+  const thumbnail = youtubeThumbnail(video?.url);
 
   return (
     <button
@@ -113,10 +115,14 @@ export function VideoCard({ video }) {
       className="w-full bg-white rounded-xl shadow-s1 p-4 gap-4 grid grid-cols-12 text-left"
     >
       <div className="col-span-3 rounded-xl overflow-hidden">
-        <img className="object-cover w-full h-full" src={video?.image} />
+        <img
+          className="object-cover w-full h-full"
+          src={thumbnail?.default?.url}
+        />
       </div>
       <div className="col-span-9">
-        <p className="f-p2-m">{video?.title}</p>
+        <p className="f-p2-m line-clamp-2">{video?.title}</p>
+        <p className="f-p2-r line-clamp-1">{video?.desc}</p>
         <div className="mt-2">
           <PostAction />
         </div>
