@@ -22,7 +22,7 @@ jobs:
             cd /var/www/stuntsync-user
             git pull
             export NODE_OPTIONS="--max-old-space-size=8192"
-            yarn install
-            yarn build
+            /home/imaginecup/.nvm/versions/node/v20.11.0/bin/yarn install
+            /home/imaginecup/.nvm/versions/node/v20.11.0/bin/yarn build
             cp ../htaccess ./build/.htaccess
             sudo systemctl restart apache2
