@@ -1,6 +1,6 @@
 import { NavbarDefaultComponent } from "src/components/navbar";
 import { StuntingStatus } from "src/components/stunting/stunting-status";
-import { FaChartLine } from "react-icons/fa";
+import { FaChartLine, FaRegSadTear } from "react-icons/fa";
 import { HeaderSection } from "src/components/header/header-section";
 import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarComponent";
 import { FiCheck } from "react-icons/fi";
@@ -100,6 +100,39 @@ export function MonitoringPage() {
     if (res) {
       setRecomendations(res.data);
     }
+  }
+
+  if (selectedBaby == null) {
+    return (
+      <div className="flex flex-col items-center">
+        <NavbarDefaultComponent title="Child Monitoring Hub" />
+
+        <div className="w-11/12 mt-4">
+          <div className="bg-blue-main bg-opacity-20 p-4 rounded-xl mt-2">
+            <p className="f-p2-r text-justify">
+              Please add your baby data{" "}
+              <button
+                onClick={() => {
+                  navigate("/add-baby");
+                }}
+                className="text-blue-main"
+                href="/add-baby"
+              >
+                here
+              </button>
+            </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <h4 className="f-p2-r text-center my-4">No Baby Found</h4>
+            <FaRegSadTear />
+          </div>
+        </div>
+
+        <div className="fixed bottom-0 w-full">
+          <BottomNavbarComponent />
+        </div>
+      </div>
+    );
   }
 
   return (

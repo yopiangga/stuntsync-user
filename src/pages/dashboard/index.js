@@ -10,8 +10,11 @@ import { MonitoringServices } from "src/services/MonitoringServices";
 import { MALE_GRAPH } from "src/constant/male-graph";
 import { FEMALE_GRAPH } from "src/constant/female-graph";
 import { INSIGHT_CATEGORY_STUNTING } from "src/constant/insight-category-stunting";
+import { FaRegSadTear } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function DashboardPage() {
+  const navigate = useNavigate();
   const monitoringServices = new MonitoringServices();
 
   const { user } = useContext(UserContext);
@@ -116,6 +119,39 @@ export function DashboardPage() {
         });
       }
     }
+  }
+
+  if (selectedBaby == null) {
+    return (
+      <div className="flex flex-col items-center">
+        <NavbarComponent />
+
+        <div className="w-11/12 mt-4">
+          <div className="bg-blue-main bg-opacity-20 p-4 rounded-xl mt-2">
+            <p className="f-p2-r text-justify">
+              Please add your baby data{" "}
+              <button
+                onClick={() => {
+                  navigate("/add-baby");
+                }}
+                className="text-blue-main"
+                href="/add-baby"
+              >
+                here
+              </button>
+            </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <h4 className="f-p2-r text-center my-4">No Baby Found</h4>
+            <FaRegSadTear />
+          </div>
+        </div>
+
+        <div className="fixed bottom-0 w-full">
+          <BottomNavbarComponent />
+        </div>
+      </div>
+    );
   }
 
   return (
