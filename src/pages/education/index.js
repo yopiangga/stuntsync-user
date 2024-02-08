@@ -6,7 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { ArticleServices } from "src/services/ArticleServices";
 import { VideoServices } from "src/services/VideoServices";
 import { useEffect, useState } from "react";
-import { ArticlesComponent, CountsComponent, MainArticleCard, SearchComponent, VideosComponent } from "src/components/education";
+import {
+  ArticlesComponent,
+  CountsComponent,
+  MainArticleCard,
+  SearchComponent,
+  VideosComponent,
+} from "src/components/education";
 
 export function EducationPage() {
   const navigate = useNavigate();
@@ -48,20 +54,27 @@ export function EducationPage() {
           <HeaderSection label="Featured Articles" />
         </div>
 
-        <div className="mt-4">
-          <MainArticleCard article={articles[0]} />
-        </div>
+        {articles.length > 0 && (
+          <div className="mt-4">
+            <MainArticleCard article={articles[0]} />
+          </div>
+        )}
+
+        {articles.length > 0 && (
+          <div className="mt-4">
+            <ArticlesComponent articles={articles} />
+          </div>
+        )}
 
         <div className="mt-4">
-          <ArticlesComponent articles={articles} />
-        </div>
-
-        <div className="mt-4">
-          <button onClick={
-            () => {
+          <button
+            onClick={() => {
               navigate("/article");
-            }
-          } className="f-p2-r bg-blue-main text-white py-1 px-3 rounded-lg">More Article</button>
+            }}
+            className="f-p2-r bg-blue-main text-white py-1 px-3 rounded-lg"
+          >
+            More Article
+          </button>
         </div>
 
         <div className="mt-6">
@@ -73,11 +86,14 @@ export function EducationPage() {
         </div>
 
         <div className="mt-4">
-          <button onClick={
-            () => {
+          <button
+            onClick={() => {
               navigate("/video");
-            }
-          } className="f-p2-r bg-blue-main text-white py-1 px-3 rounded-lg">More Video</button>
+            }}
+            className="f-p2-r bg-blue-main text-white py-1 px-3 rounded-lg"
+          >
+            More Video
+          </button>
         </div>
       </div>
 
@@ -91,4 +107,3 @@ export function EducationPage() {
     </div>
   );
 }
-

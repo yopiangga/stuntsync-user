@@ -4,7 +4,13 @@ import { BottomNavbarComponent } from "src/components/navbar/BottomNavbarCompone
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ArticleServices } from "src/services/ArticleServices";
-import { ArticlesComponent, CountsComponent, MainArticleCard, SearchComponent, VideosComponent } from "src/components/education";
+import {
+  ArticlesComponent,
+  CountsComponent,
+  MainArticleCard,
+  SearchComponent,
+  VideosComponent,
+} from "src/components/education";
 
 export function ArticlePage() {
   const navigate = useNavigate();
@@ -35,14 +41,17 @@ export function ArticlePage() {
           <HeaderSection label="Featured Articles" />
         </div>
 
-        <div className="mt-4">
-          <MainArticleCard article={articles[0]} />
-        </div>
+        {articles.length > 0 && (
+          <div className="mt-4">
+            <MainArticleCard article={articles[0]} />
+          </div>
+        )}
 
-        <div className="mt-4">
-          <ArticlesComponent articles={articles} />
-        </div>
-
+        {articles.length > 0 && (
+          <div className="mt-4">
+            <ArticlesComponent articles={articles} />
+          </div>
+        )}
       </div>
 
       <br />
