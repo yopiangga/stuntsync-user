@@ -1,6 +1,7 @@
 import imageStatusDanger from "../../assets/images/status-danger.svg";
 import imageStatusWarning from "../../assets/images/status-warning.svg";
 import imageStatusNormal from "../../assets/images/status-normal.svg";
+import imageStatusNoData from "../../assets/images/status-no-data.svg";
 import imageUser from "../../assets/images/user.png";
 
 export function StuntingStatus({ name, age, image = imageUser, status }) {
@@ -9,7 +10,9 @@ export function StuntingStatus({ name, age, image = imageUser, status }) {
       ? imageStatusDanger
       : status == "warning"
       ? imageStatusWarning
-      : imageStatusNormal;
+      : status == "normal"
+      ? imageStatusNormal
+      : imageStatusNoData;
 
   return (
     <div className="shadow-s1 rounded-xl bg-white flex p-4 items-center gap-4">

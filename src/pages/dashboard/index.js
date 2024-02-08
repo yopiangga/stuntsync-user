@@ -187,7 +187,17 @@ export function DashboardPage() {
           <HeaderSection label="Stunting Insight" />
         </div>
 
-        <div className="shadow-xl rounded-xl bg-white flex p-4 items-center gap-4 mt-4">
+        <div
+          className={`shadow-xl rounded-xl flex p-4 items-center gap-4 bg-opacity-50 mt-4 ${
+            selectedBaby?.status == "danger"
+              ? "bg-red-secondary"
+              : selectedBaby?.status == "warning"
+              ? "bg-orange-secondary"
+              : selectedBaby?.status == "normal"
+              ? "bg-green-secondary"
+              : "bg-white"
+          }}`}
+        >
           <p className="f-p2-r text-justify">{selectedBaby?.insight?.desc}</p>
         </div>
 
