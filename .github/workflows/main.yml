@@ -8,6 +8,12 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          # Optionally specify yarn version
+          # yarn-version: '1.x'
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -16,7 +22,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            npm install --global yarn
             cd /var/www/stuntsync-user
             git pull
             export NODE_OPTIONS="--max-old-space-size=8192"
