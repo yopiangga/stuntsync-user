@@ -39,7 +39,16 @@ export function DetailVideoPage() {
       <div className="w-11/12 mt-6">
         <div>
           {/* <img src={video?.image} alt="Video" className="w-full" /> */}
-          <YouTube videoId={video?.url.split("v=")[1].split("&")[0]} />
+          <YouTube
+            videoId={video?.url.split("v=")[1].split("&")[0]}
+            opts={{
+              height: "280",
+              width: "100%",
+              playerVars: {
+                autoplay: 0,
+              },
+            }}
+          />
         </div>
 
         <div className="mt-4">
