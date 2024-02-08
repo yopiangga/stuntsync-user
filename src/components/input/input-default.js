@@ -7,6 +7,8 @@ export function InputDefault({
   required = false,
   placeholder = "",
   color = "dark",
+  min,
+  max,
 }) {
   return (
     <div className="flex flex-col">
@@ -25,6 +27,8 @@ export function InputDefault({
         name={name}
         value={value}
         onChange={handleChange}
+        min={min}
+        max={max}
         type={type}
         required={required}
         placeholder={placeholder}

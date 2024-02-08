@@ -55,7 +55,7 @@ export function MonitoringFormPage() {
 
     if (res) {
       toast.success(res.message);
-      navigate("/monitoring");
+      window.location.href = "/monitoring";
     }
   };
 

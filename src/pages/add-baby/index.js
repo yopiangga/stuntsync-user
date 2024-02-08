@@ -2,15 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputDefault } from "src/components/input/input-default";
 import { InputSelect } from "src/components/input/input-select";
-import { InputTextarea } from "src/components/input/input-textarea";
-import LoadComponent from "src/components/load";
 import { NavbarDefaultComponent } from "src/components/navbar";
-import imageUser from "src/assets/images/user.png";
 import { ButtonComponent } from "src/components/button";
 import { UserContext } from "src/context/UserContext";
-import { MonitoringServices } from "src/services/MonitoringServices";
 import toast from "react-hot-toast";
-import { RecomendationServices } from "src/services/RecomendationServices";
 import { BabyServices } from "src/services/BabyServices";
 
 export function AddBabyPage() {
@@ -18,6 +13,12 @@ export function AddBabyPage() {
   const babyServices = new BabyServices();
 
   const { user } = useContext(UserContext);
+
+  const today = new Date();
+
+  const minDateObj = new Date();
+  minDateObj.setMonth(today.getMonth() - 59);
+  const minDate = minDateObj.toISOString().split("T")[0];
 
   const [formData, setFormData] = useState({});
 
@@ -38,7 +39,7 @@ export function AddBabyPage() {
 
     if (res) {
       toast.success(res.message);
-      navigate("/");
+      window.location.href = "/";
     }
   };
 
@@ -62,6 +63,8 @@ export function AddBabyPage() {
               label="Date of Birth"
               placeholder="Date of Birth"
               value={formData.dob}
+              min={minDate}
+              max={today.toISOString().split("T")[0]}
               name="dob"
               handleChange={handleChange}
               required={true}
