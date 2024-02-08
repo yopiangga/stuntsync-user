@@ -19,7 +19,7 @@ jobs:
             cd /var/www/stuntsync-user
             git pull
             export NODE_OPTIONS="--max-old-space-size=8192"
-            yarn install
-            yarn build
+            npm run install
+            npm run build
             cp ../htaccess ./build/.htaccess
             sudo systemctl restart apache2
