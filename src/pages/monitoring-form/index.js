@@ -72,7 +72,7 @@ export function MonitoringFormPage() {
 
         <div className="bg-blue-main bg-opacity-20 p-4 rounded-xl mt-2">
           <p className="f-p2-r text-justify">
-            I your baby is not yet registered, please register your baby first{" "}
+            If your baby is not yet registered, please register your baby first{" "}
             <button
               onClick={() => {
                 navigate("/add-baby");
