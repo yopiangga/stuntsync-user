@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { ButtonComponent } from "src/components/button";
 import { InputDefault } from "src/components/input/input-default";
 import imageLogo from "src/assets/images/logo.png";
+import { AuthServices } from "src/services/AuthServices";
+import toast from "react-hot-toast";
 
 export function SignUpPage() {
   const navigate = useNavigate();
+  const authServices = new AuthServices();
 
   const [inputSignUp, setInputSignUp] = useState({
     name: "",
@@ -23,6 +26,18 @@ export function SignUpPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const res = await authServices.SignUp({
+      name: inputSignUp.name,
+      email: inputSignUp.email,
+      password: inputSignUp.password,
+    });
+
+    if (res) {
+      toast.success(res.message);
+      document.cookie = `token=${res.data.token}`;
+      window.location.href = "/";
+    }
   }
 
   return (

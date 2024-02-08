@@ -10,6 +10,8 @@ export class AuthServices {
         name: name,
         email: email,
         password: password,
+        role: "user",
+        posyanduId: null,
       });
       if (res.status === 200) {
         return res.data;
