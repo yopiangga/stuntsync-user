@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadComponent from "src/components/load";
 import { NavbarDefaultComponent } from "src/components/navbar";
 import { ArticleServices } from "src/services/ArticleServices";
 
@@ -15,8 +16,12 @@ export function DetailArticlePage() {
   }, []);
 
   async function fetchArticle() {
-    const res = await articleServices.DetailArticle({ id});
+    const res = await articleServices.DetailArticle({ id });
     setArticle(res.data);
+  }
+
+  if (article == null) {
+    return <LoadComponent />;
   }
 
   return (
@@ -32,30 +37,22 @@ export function DetailArticlePage() {
 
       <div className="w-11/12 mt-6">
         <div>
-          <img
-            src={article?.image}
-            alt="Article"
-            className="w-full"
-          />
+          <img src={article?.image} alt="Article" className="w-full" />
         </div>
 
         <div className="mt-4">
-          <h2 className="f-h2">
-            {
-              article?.title
-            }
-          </h2>
-          <p className="f-p2-r mt-2">{
-            new Date(article?.createdAt).toDateString()
-          }</p>
-        </div>
-
-        <div className="mt-4">
-          <p className="f-p1-r text-justify">
-            {
-              article?.content
-            }
+          <h2 className="f-h2">{article?.title}</h2>
+          <p className="f-p2-r mt-2">
+            {new Date(article?.createdAt).toDateString()}
           </p>
+        </div>
+
+        <div className="mt-4 text-justify">
+          <div
+            className="dangerous"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+          {/* <p className="f-p1-r text-justify">{article?.content}</p> */}
         </div>
 
         <br />

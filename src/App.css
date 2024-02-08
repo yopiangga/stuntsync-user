@@ -5,6 +5,28 @@ body {
   color: "#080E1C";
 }
 
+.dangerous p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.dangerous ul {
+  list-style-type: disc;
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+.dangerous li {
+  margin-bottom: 0;
+}
+
+.dangerous ol {
+  list-style-type: decimal; 
+  margin-left: 1.5em; 
+  padding-left: 0; 
+  font-size: medium;
+}
+
 /* Button */
  .btn {
   padding-left: 16px;
