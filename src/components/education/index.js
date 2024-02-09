@@ -120,9 +120,11 @@ export function VideoCard({ video }) {
           src={thumbnail?.default?.url}
         />
       </div>
-      <div className="col-span-9">
-        <p className="f-p2-m line-clamp-2">{video?.title}</p>
-        <p className="f-p2-r line-clamp-1">{video?.desc}</p>
+      <div className="col-span-9 flex flex-col justify-between">
+        <div>
+          <p className="f-p2-m line-clamp-2">{video?.title}</p>
+          <p className="f-p2-r line-clamp-1">{video?.desc}</p>
+        </div>
         <div className="mt-2">
           <PostAction />
         </div>
