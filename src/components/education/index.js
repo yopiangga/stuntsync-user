@@ -120,8 +120,8 @@ export function VideoCard({ video }) {
           src={thumbnail?.default?.url}
         />
       </div>
-      <div className="col-span-9 flex flex-col justify-between">
-        <div>
+      <div className="col-span-9 flex flex-col justify-between h-full">
+        <div className="grow">
           <p className="f-p2-m line-clamp-2">{video?.title}</p>
           <p className="f-p2-r line-clamp-1">{video?.desc}</p>
         </div>
