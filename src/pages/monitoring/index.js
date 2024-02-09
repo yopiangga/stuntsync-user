@@ -28,7 +28,7 @@ export function MonitoringPage() {
   const [recomendations, setRecomendations] = useState([]);
   const [monitorings, setMonitorings] = useState([]);
   const [recomendationActive, setRecomendationActive] = useState();
-  const [selectedBaby, setSelectedBaby] = useState(user.baby[0]);
+  const [selectedBaby, setSelectedBaby] = useState();
 
   useEffect(() => {
     if (user.baby.length > 0) {
@@ -45,44 +45,45 @@ export function MonitoringPage() {
     if (res) {
       setMonitorings(res.data);
 
-      const dob = new Date(selectedBaby.dob);
+      const dob = new Date(baby.dob);
       const age = Math.floor(
         (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
       );
 
       if (res.data.length > 0) {
-        if (selectedBaby.gender == "male") {
+        if (baby.gender == "male") {
           if (MALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({ ...baby, status: "danger" });
           } else if (
             MALE_GRAPH[age].min2sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({ ...baby, status: "danger" });
           } else if (
             MALE_GRAPH[age].min1sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "warning" });
+            setSelectedBaby({ ...baby, status: "warning" });
           } else {
-            setSelectedBaby({ ...selectedBaby, status: "normal" });
+            setSelectedBaby({ ...baby, status: "normal" });
           }
         } else {
           if (FEMALE_GRAPH[age].min3sd > res.data[res.data.length - 1].height) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({ ...baby, status: "danger" });
           } else if (
             MALE_GRAPH[age].min2sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "danger" });
+            setSelectedBaby({ ...baby, status: "danger" });
           } else if (
             MALE_GRAPH[age].min1sd > res.data[res.data.length - 1].height
           ) {
-            setSelectedBaby({ ...selectedBaby, status: "warning" });
+            setSelectedBaby({ ...baby, status: "warning" });
           } else {
-            setSelectedBaby({ ...selectedBaby, status: "normal" });
+            setSelectedBaby({ ...baby, status: "normal" });
           }
         }
       } else {
+        console.log("Data Empty");
         setSelectedBaby({
-          ...selectedBaby,
+          // ...selectedBaby,
           ...baby,
           status: "-",
           insight: {
@@ -94,7 +95,7 @@ export function MonitoringPage() {
     }
   }
 
-  async function fetchRecomendations({ babyId = user.baby[0].id }) {
+  async function fetchRecomendations({ babyId }) {
     const res = await recomendationServices.RecomendationByBabyId({ babyId });
 
     if (res) {
@@ -179,19 +180,17 @@ export function MonitoringPage() {
       <div className="relative bg-white w-full flex justify-center">
         <div className="absolute w-full h-14 bg-blue-main"></div>
         <div className="w-11/12 relative">
-          {selectedBaby != null ? (
-            <StuntingStatus
-              name={selectedBaby.name}
-              image={selectedBaby.image}
-              status={selectedBaby.status}
-              age={
-                Math.floor(
-                  (new Date() - new Date(selectedBaby.dob)) /
-                    (1000 * 60 * 60 * 24 * 30)
-                ) + " months"
-              }
-            />
-          ) : null}
+          <StuntingStatus
+            name={selectedBaby.name}
+            image={selectedBaby.image}
+            status={selectedBaby.status}
+            age={
+              Math.floor(
+                (new Date() - new Date(selectedBaby.dob)) /
+                  (1000 * 60 * 60 * 24 * 30)
+              ) + " months"
+            }
+          />
         </div>
       </div>
 
