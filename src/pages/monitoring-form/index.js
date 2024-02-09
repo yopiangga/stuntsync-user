@@ -49,7 +49,7 @@ export function MonitoringFormPage() {
 
     const resRecomendation =
       await recomendationServices.CreateRecomendationAuto({
-        babyId: formData.babyId,
+        babyId: parseInt(formData.babyId),
         month: age,
       });
 
