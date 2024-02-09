@@ -81,7 +81,6 @@ export function MonitoringPage() {
           }
         }
       } else {
-        console.log("Data Empty");
         setSelectedBaby({
           // ...selectedBaby,
           ...baby,

@@ -35,7 +35,7 @@ export function MonitoringFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const baby = user.baby.find((baby) => baby.id === formData.babyId);
+    const baby = user.baby.find((baby) => baby.id == formData.babyId);
     const dob = new Date(baby.dob);
     const age = Math.floor(
       (new Date().getTime() - dob.getTime()) / (1000 * 3600 * 24 * 30)
