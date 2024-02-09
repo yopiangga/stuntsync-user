@@ -42,7 +42,7 @@ export function MonitoringFormPage() {
     );
 
     const res = await monitoringServices.CreateMonitoring({
-      babyId: formData.babyId,
+      babyId: parseInt(formData.babyId),
       height: formData.height,
       month: age,
     });
